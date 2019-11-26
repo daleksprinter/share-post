@@ -13,5 +13,11 @@ migrate/status:
 migrate/up:
 	$(GOOSE) up
 
+migrate/create:
+	$(GOOSE) create $(NAME) sql
+
+migrate/redo:
+	$(GOOSE) redo
+
 db/reset:
 	docker-compose exec share-pos-db mysql -h 0.0.0.0 -u root -p$(PASSWORD) -e "DROP DATABASE if exists $(DBNAME); CREATE DATABASE $(DBNAME);"
