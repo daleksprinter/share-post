@@ -5,6 +5,8 @@ import (
 	"net/http"
 	"os"
 
+	"./auth"
+
 	"database/sql"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -34,6 +36,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 func NewRouter() *mux.Router {
 	r := mux.NewRouter()
 	r.HandleFunc("/", Index)
+	r.HandleFunc("/login", auth.LoginHandler)
 	return r
 }
 
@@ -71,5 +74,5 @@ func main() {
 
 	s := NewServer()
 	s.Init("root:password@tcp(0.0.0.0:3306)/share_pos")
-	s.Run("127.0.0.1:8080")
+	s.Run(datasource)
 }
