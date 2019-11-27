@@ -1,11 +1,14 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"os"
 
 	"./auth"
+	"./config"
+	"./session"
 
 	"database/sql"
 
@@ -30,13 +33,23 @@ func NewDB(datasource string) (*sql.DB, error) {
 }
 
 func Index(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("gorilla"))
+	sess, err := session.Store.Get(r, session.SessionName)
+	if err != nil {
+		fmt.Fprintf(w, "could not get session")
+	}
+	tok, ok := sess.Values["oauthTokenSessionKey"].(string)
+	if !ok {
+		fmt.Fprint(w, "could not get token")
+	}
+
+	w.Write([]byte(tok))
 }
 
 func NewRouter() *mux.Router {
 	r := mux.NewRouter()
 	r.HandleFunc("/", Index)
 	r.HandleFunc("/login", auth.LoginHandler)
+	r.HandleFunc("/oauth2callback", auth.OAuthCallbackHandler)
 	return r
 }
 
@@ -64,6 +77,7 @@ func (s *Server) Run(addr string) {
 
 func main() {
 	err := godotenv.Load()
+	auth.OAuthConfig = config.ConfigureOAuthClient()
 	if err != nil {
 		log.Fatalf("error loading .env file. %s", err)
 	}

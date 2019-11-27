@@ -5,4 +5,5 @@ import (
 )
 
 var Store = sessions.NewCookieStore([]byte("secret-key"))
+var SessionName = "sess"
 

@@ -7,14 +7,14 @@ import (
 	"golang.org/x/oauth2/google"
 )
 
-func ConfigureOAuthClient(clientID string, clientSecret string) *oauth2.Config {
+func ConfigureOAuthClient() *oauth2.Config {
 	redirectURL := os.Getenv("OAUTH2_CALLBACK")
 	if redirectURL == "" {
 		redirectURL = "http://localhost:8080/oauth2callback"
 	}
 	return &oauth2.Config{
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
+		ClientID:     os.Getenv("GOOGLE_CLIENT_ID"),
+		ClientSecret: os.Getenv("GOOGLE_CLIENT_SECRET"),
 		RedirectURL:  redirectURL,
 		Scopes:       []string{"email", "profile"},
 		Endpoint:     google.Endpoint,
