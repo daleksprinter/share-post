@@ -1,7 +1,7 @@
 
 -- +goose Up
 create table category(
-    id int primary key not null,
+    id int primary key auto_increment,
     title varchar(255) not null,
     created_user int not null,
     room_id int not null,

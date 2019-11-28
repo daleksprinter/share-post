@@ -1,7 +1,7 @@
 
 -- +goose Up
 create table post(
-    id int primary key not null,
+    id int primary key auto_increment,
     content text not null,
     color_code varchar(255) not null,
     room_id int not null,

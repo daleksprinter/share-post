@@ -8,14 +8,13 @@ import (
 
 	"./auth"
 	"./config"
-	"./session"
 	"./controller"
+	"./session"
 
-	"github.com/jmoiron/sqlx"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/jmoiron/sqlx"
 
 	"github.com/gorilla/mux"
-
 
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/joho/godotenv"
@@ -102,4 +101,6 @@ func main() {
 	s := NewServer()
 	s.Init("root:password@tcp(0.0.0.0:3306)/share_pos")
 	s.Run(datasource)
+
+	defer s.db.Close()
 }
