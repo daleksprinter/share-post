@@ -62,7 +62,7 @@ func NewRouter(db *sqlx.DB) *mux.Router {
 
 	card := controller.NewCard(db)
 	r.HandleFunc("/rooms/{id}/cards", card.GetCardByRoomIDHandler)
-	r.HandleFunc("/rooms/{room_id}/categories/{category_id}/cards",  card.GetCardByRoomIDAndCategoryHandler-)
+	r.HandleFunc("/rooms/{room_id}/categories/{category_id}/cards", card.GetCardByRoomIDAndCategoryHandler)
 
 	category := controller.NewCategory(db)
 	r.HandleFunc("/rooms/{id}/categories", category.GetCategoryByRoomIDHandler)

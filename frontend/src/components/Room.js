@@ -1,17 +1,19 @@
 import React, {Component} from 'react';
+import Category from '../components/Category'
 
-class Category extends Component{
+class Room extends Component{
 
     constructor(props){
         super(props)
     }
 
     componentDidMount(){
-        const url = `http://localhost:8080/rooms/1/categories/${this.props.data.id}/cards`
+        console.log(this.props)
+        const url = `http://localhost:8080/rooms/1/categories`
         fetch(url).then(res => {
             return res.json()
         }).then(json => {
-            console.log(json)
+            for(const category of json) this.props.addCategory(category)
         })
     }
 
@@ -19,10 +21,12 @@ class Category extends Component{
     render(){
         return(
             <div>
-                <div>{this.props.data.Title}</div>
+                {this.props.room.categories.map(category => {
+                    return <Category data = {category} />
+                })}
             </div>
         )
     }
 }
 
-export default Category;
+export default Room;

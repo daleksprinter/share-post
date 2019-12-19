@@ -1,10 +1,10 @@
 import {createStore as reduxCreateStore, combineReducers } from 'redux';
-import {categoryReducer} from './reducers/Category';
+import {roomReducer} from './reducers/Room';
 
 function createStore(){
     const store = reduxCreateStore(
         combineReducers({
-            category:categoryReducer,
+            room:roomReducer,
         })
     )
     return store
