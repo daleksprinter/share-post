@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Category from '../components/Category'
+import Category from '../containers/Category'
 
 class Room extends Component{
 
