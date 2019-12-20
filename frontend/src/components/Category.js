@@ -6,11 +6,6 @@ class Category extends Component{
         super(props)
     }
 
-    componentDidMount(){
-        console.log(this.props.data.id)
-    }
-
-
     render(){
         return(
             <div>
