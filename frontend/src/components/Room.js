@@ -16,6 +16,7 @@ class Room extends Component{
             for(const category of json) this.props.addCategory(category)
         })
 
+        console.log(this.props)
 
         //get cards
         const cards_url = `http://localhost:8080/rooms/1/cards`
@@ -28,7 +29,7 @@ class Room extends Component{
     }
 
     handleClick = () => {
-        console.log('clicked')
+        this.props.addInput()
     }
 
     render(){
@@ -40,6 +41,11 @@ class Room extends Component{
                     })}
                 </div>
                 <div>
+                    {this.props.inputs.inputs.map(txt => {
+                        return (
+                            <div>inputing{txt}</div>
+                        )
+                    })}
                     <button onClick = {this.handleClick}>add_card</button>
                 </div>
             </div>
