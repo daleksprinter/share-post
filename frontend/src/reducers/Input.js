@@ -9,7 +9,10 @@ export const inputReducer = (state = initialState, action) => {
             newState.inputs.push("this is sample text");
             return newState;
 
-        
+        case "edit_input":
+            const newStat = Object.assign({}, state);
+            newStat.inputs[action.payload.id] = action.payload.txt;
+            return newStat;
 
         default :
             return state;

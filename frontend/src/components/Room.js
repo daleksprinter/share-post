@@ -32,6 +32,11 @@ class Room extends Component{
         this.props.addInput()
     }
 
+    handlechange = (e) => {
+        this.props.editInput(e.target.id, e.target.value);
+        console.log(this.props.inputs.inputs)
+    }
+
     render(){
         return(
             <div>
@@ -41,9 +46,9 @@ class Room extends Component{
                     })}
                 </div>
                 <div>
-                    {this.props.inputs.inputs.map(txt => {
+                    {this.props.inputs.inputs.map((txt, ind) => {
                         return (
-                            <div>inputing{txt}</div>
+                            <textarea id = {ind} onChange = {this.handlechange}>{txt}</textarea>
                         )
                     })}
                     <button onClick = {this.handleClick}>add_card</button>
