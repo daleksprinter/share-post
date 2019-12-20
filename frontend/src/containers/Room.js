@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
-import * as actions from '../actions/Room';
+import * as category_actions from '../actions/Category';
+import * as room_actions from '../actions/Room';
 import Room from '../components/Room';
 
 const mapStateToProps = (state) => {
@@ -10,7 +11,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addCategory : (category) => dispatch(actions.addCategory(category)),
+        addCategory : (category) => dispatch(room_actions.addCategory(category)),
+        addCard : (card) => dispatch(category_actions.addCard(card)),
     }
 }
 
