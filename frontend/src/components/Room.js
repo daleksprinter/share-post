@@ -27,13 +27,21 @@ class Room extends Component{
         })
     }
 
+    handleClick = () => {
+        console.log('clicked')
+    }
 
     render(){
         return(
             <div>
-                {this.props.room.categories.map(category => {
-                    return <Category data = {category} />
-                })}
+                <div>
+                    {this.props.room.categories.map(category => {
+                        return <Category data = {category} />
+                    })}
+                </div>
+                <div>
+                    <button onClick = {this.handleClick}>add_card</button>
+                </div>
             </div>
         )
     }

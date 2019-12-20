@@ -6,6 +6,9 @@ import (
 	"net/http"
 	"os"
 
+	"./model"
+	"encoding/json"
+
 	"./auth"
 	"./config"
 	"./controller"
@@ -42,6 +45,11 @@ func NewDB() (*sqlx.DB, error) {
 }
 
 func Index(w http.ResponseWriter, r *http.Request) {
+
+	var card model.Card
+	json.NewDecoder(r.Body).Decode(&card)
+	fmt.Println(card)
+
 	sess, err := session.Store.Get(r, session.SessionName)
 	if err != nil {
 		fmt.Fprintf(w, "could not get session")
@@ -56,13 +64,14 @@ func Index(w http.ResponseWriter, r *http.Request) {
 
 func NewRouter(db *sqlx.DB) *mux.Router {
 	r := mux.NewRouter()
-	r.HandleFunc("/", Index)
+	r.HandleFunc("/", Index).Methods("POST")
 	r.HandleFunc("/login", auth.LoginHandler)
 	r.HandleFunc("/oauth2callback", auth.OAuthCallbackHandler)
 
 	card := controller.NewCard(db)
 	r.HandleFunc("/rooms/{id}/cards", card.GetCardByRoomIDHandler)
-	r.HandleFunc("/rooms/{room_id}/categories/{category_id}/cards", card.GetCardByRoomIDAndCategoryHandler)
+	r.HandleFunc("/rooms/{room_id}/categories/{category_id}/cards", card.GetCardByRoomIDAndCategoryHandler).Methods("GET")
+	r.HandleFunc("/rooms/{room_id}/categories/{category_id}/cards", card.PostCardByRoomIDAndCategorHandler).Methods("POST")
 
 	category := controller.NewCategory(db)
 	r.HandleFunc("/rooms/{id}/categories", category.GetCategoryByRoomIDHandler)

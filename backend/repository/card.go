@@ -21,3 +21,11 @@ func GetCardByRoomIDAndCategory(db *sqlx.DB, RoomID int, CategoryID int) ([]mode
 	}
 	return cards, nil
 }
+
+func PostCardByRoomIDAndCategory(db *sqlx.DB, card model.Card) error {
+
+	if _, err := db.Query("insert into post(content, color_code, room_id, category_id, created_user) values(?, ?, ?, ?, ?)", card.Content, card.ColorCode, card.RoomID, card.CategoryID, card.CreatedUser); err != nil {
+		return err
+	}
+	return nil
+}
