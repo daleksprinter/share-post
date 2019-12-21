@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Category from '../containers/Category'
+import InputTxt from '../containers/InputTxt'
 
 class Room extends Component{
 
@@ -32,11 +33,6 @@ class Room extends Component{
         this.props.addInput()
     }
 
-    handlechange = (e) => {
-        this.props.editInput(e.target.id, e.target.value);
-        console.log(this.props.inputs.inputs)
-    }
-
     render(){
         return(
             <div>
@@ -48,7 +44,7 @@ class Room extends Component{
                 <div>
                     {this.props.inputs.inputs.map((txt, ind) => {
                         return (
-                            <textarea id = {ind} onChange = {this.handlechange}>{txt}</textarea>
+                            <InputTxt id = {ind} txt = {txt}></InputTxt>
                         )
                     })}
                     <button onClick = {this.handleClick}>add_card</button>
