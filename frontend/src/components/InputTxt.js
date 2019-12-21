@@ -5,10 +5,13 @@ import {useDrag} from 'react-dnd'
 function InputTxt(props) {
 
     const [{isDragging}, drag] = useDrag({
-        item: { type: ItemTypes.INPUTAREA },
-            collect: monitor => ({
-                isDragging: !!monitor.isDragging(),
-            }),
+        item: { 
+            type: ItemTypes.INPUTAREA,
+            txt: props.txt
+        },
+        collect: monitor => ({
+            isDragging: !!monitor.isDragging(),
+        }),
     })
 
     const handlechange = (e) => {

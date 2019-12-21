@@ -8,7 +8,7 @@ function Category(props){
 
     const [{isOver}, drop] = useDrop({
         accept: ItemTypes.INPUTAREA,
-        drop: () => console.log(props.data.id),
+        drop: (item, monitor, comp) => console.log(monitor.getItem()),
         collect: monitor => ({
             isOver: !!monitor.isOver(),
         })
