@@ -38,9 +38,15 @@ class Room extends Component{
             <div>
                 <div>
                     {this.props.room.categories.map(category => {
-                        return <Category data = {category} />
+                        return (
+                            <div>
+                                <br />
+                                <Category data = {category} />
+                            </div>
+                        )
                     })}
                 </div>
+                <br />
                 <div>
                     {this.props.inputs.inputs.map((txt, ind) => {
                         return (

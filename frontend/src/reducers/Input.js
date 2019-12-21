@@ -18,9 +18,11 @@ export const inputReducer = (state = initialState, action) => {
             console.log(action.payload.id)
             const newSta = Object.assign({}, state);
             const arr = newSta.inputs.slice(0, action.payload.id).concat(newSta.inputs.slice(action.payload.id + 1, newSta.inputs.length));
-            console.log(arr)
-            newSta.inputs = arr;
-            console.log(newSta)
+            console.log('arr', arr)
+            newSta.inputs.length = 0;
+            console.log(newSta.inputs);
+            for(const e of arr) newSta.inputs.push(e);
+            console.log('newsta', newSta.inputs)
             return newSta;
 
         default :
