@@ -6,7 +6,7 @@ import {useDrop} from 'react-dnd';
 
 function Category(props){
 
-    const post_card = (txt) => {
+    const post_card = (txt, id) => {
         const url = `http://localhost:8080/rooms/1/categories/${props.data.id}/cards`;
         fetch(url, {
             method: "POST",
@@ -17,15 +17,20 @@ function Category(props){
                 content: txt
             })
         }).then(res => {
-            return res.text()
-        }).then(txt => {
-            console.log(txt)
+          props.deleteInput(id)
+          props.addCard({
+              id:"new",
+              content: txt,
+              room_id:1,
+              category_id: props.data.id,
+          })
+          console.log(props.category)
         })
     }
 
     const [{isOver}, drop] = useDrop({
         accept: ItemTypes.INPUTAREA,
-        drop: (item, monitor, comp) => post_card(monitor.getItem().txt),
+        drop: (item, monitor, comp) => post_card(monitor.getItem().txt, monitor.getItem().id),
         collect: monitor => ({
             isOver: !!monitor.isOver(),
         })

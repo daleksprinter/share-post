@@ -13,6 +13,15 @@ export const inputReducer = (state = initialState, action) => {
             const newStat = Object.assign({}, state);
             newStat.inputs[action.payload.id] = action.payload.txt;
             return newStat;
+        
+        case "delete_input":
+            console.log(action.payload.id)
+            const newSta = Object.assign({}, state);
+            const arr = newSta.inputs.slice(0, action.payload.id).concat(newSta.inputs.slice(action.payload.id + 1, newSta.inputs.length));
+            console.log(arr)
+            newSta.inputs = arr;
+            console.log(newSta)
+            return newSta;
 
         default :
             return state;

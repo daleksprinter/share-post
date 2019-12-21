@@ -13,3 +13,12 @@ export const editInput = (id, txt) => {
         }
     }
 }
+
+export const deleteInput = (id) => {
+    return {
+        type : 'delete_input',
+        payload : {
+            id: id,
+        }
+    }
+}

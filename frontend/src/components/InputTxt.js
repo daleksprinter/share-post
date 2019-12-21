@@ -7,7 +7,8 @@ function InputTxt(props) {
     const [{isDragging}, drag] = useDrag({
         item: { 
             type: ItemTypes.INPUTAREA,
-            txt: props.txt
+            txt: props.txt,
+            id: props.id,
         },
         collect: monitor => ({
             isDragging: !!monitor.isDragging(),
