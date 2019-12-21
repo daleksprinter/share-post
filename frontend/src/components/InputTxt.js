@@ -1,23 +1,32 @@
 import React, {Component} from 'react';
+import {ItemTypes} from '../dnd/types'
+import {useDrag} from 'react-dnd'
 
-class InputTxt extends Component{
+function InputTxt(props) {
 
-    constructor(props){
-        super(props)
+    const [{isDragging}, drag] = useDrag({
+        item: { type: ItemTypes.INPUTAREA },
+            collect: monitor => ({
+                isDragging: !!monitor.isDragging(),
+            }),
+    })
+
+    const handlechange = (e) => {
+        props.editInput(props.id, e.target.value);
+        console.log(props.inputs.inputs)
     }
 
-    handlechange = (e) => {
-        this.props.editInput(this.props.id, e.target.value);
-        console.log(this.props.inputs.inputs)
-    }
-
-    render(){
-        return(
-            <div>
-                <textarea onChange = {this.handlechange}>{this.props.txt}</textarea>
-            </div>
-        )
-    }
+    return(
+        <div
+            ref = {drag}
+            style = {{
+                opacity: isDragging ? 0.5 : 1,
+                cursor: 'move',
+            }}
+        >
+            <textarea onChange = {handlechange}>{props.txt}</textarea>
+        </div>
+    )
 }
 
 export default InputTxt;
