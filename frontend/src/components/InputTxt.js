@@ -26,9 +26,10 @@ function InputTxt(props) {
             style = {{
                 opacity: isDragging ? 0.5 : 1,
                 cursor: 'move',
+
             }}
         >
-            <textarea onChange = {handlechange}>{props.txt}</textarea>
+            <textarea onChange = {handlechange} placeholder = "input your idea">{props.txt}</textarea>
         </div>
     )
 }

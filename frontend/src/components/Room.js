@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Category from '../containers/Category'
 import InputTxt from '../containers/InputTxt'
+import { SvgIcon } from '@material-ui/core';
 
 class Room extends Component{
 
@@ -40,21 +41,19 @@ class Room extends Component{
                     {this.props.room.categories.map(category => {
                         return (
                             <div>
-                                <br />
                                 <Category data = {category} />
                             </div>
                         )
                     })}
                 </div>
-                <br />
                 <div>
                     {this.props.inputs.inputs.map((txt, ind) => {
                         return (
                             <InputTxt id = {ind} txt = {txt}></InputTxt>
                         )
                     })}
-                    <button onClick = {this.handleClick}>add_card</button>
                 </div>
+                    <button onClick = {this.handleClick}>add_card</button>
             </div>
         )
     }
