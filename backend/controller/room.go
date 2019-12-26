@@ -28,10 +28,10 @@ func (rc *RoomController) ServeWs(w http.ResponseWriter, r *http.Request) {
 	if !ok {
 		room = *websocket.NewRoom(id)
 		websocket.Rooms[id] = room
+		go room.Run()
 	}
 
 	client := websocket.NewClient(&room, w, r)
-	go client.Read()
 	go client.Write()
 
 }

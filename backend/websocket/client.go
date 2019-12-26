@@ -14,7 +14,7 @@ type Client struct {
 }
 
 var upgrader = websocket.Upgrader{
-	CheckOrigin: func(r *http.Request) bool{
+	CheckOrigin: func(r *http.Request) bool {
 		return true
 	},
 }
@@ -30,21 +30,6 @@ func NewClient(room *Room, w http.ResponseWriter, r *http.Request) *Client {
 	client.Room.Register <- client
 
 	return client
-}
-
-func (c *Client) Read() {
-	defer func() {
-		c.Room.Unregister <- c
-		c.Conn.Close()
-	}()
-	for {
-		var message *Message
-		if err := c.Conn.ReadJSON(&message); err == nil {
-			c.Room.Forward <- message
-		} else {
-			break
-		}
-	}
 }
 
 func (c *Client) Write() {
