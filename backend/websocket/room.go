@@ -10,6 +10,8 @@ type Room struct {
 	Clients    map[*Client]bool
 }
 
+var Rooms = make(map[string]Room)
+
 func NewRoom(name string) *Room {
 	return &Room{
 		Name:       name,

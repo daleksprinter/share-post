@@ -53,7 +53,8 @@ class Room extends Component{
                         )
                     })}
                 </div>
-                    <button onClick = {this.handleClick}>add_card</button>
+                <button onClick = {this.handleClick}>add_card</button>
+
             </div>
         )
     }
