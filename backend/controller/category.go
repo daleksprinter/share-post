@@ -6,7 +6,7 @@ import (
 
 	"strconv"
 
-	"../repository"
+	"github.com/daleksprinter/share-post/repository"
 	"github.com/gorilla/mux"
 	"github.com/jmoiron/sqlx"
 )

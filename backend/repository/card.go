@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"../model"
+	"github.com/daleksprinter/share-post/model"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/jmoiron/sqlx"
 )

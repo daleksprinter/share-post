@@ -7,8 +7,8 @@ import (
 
 	"strconv"
 
-	"../model"
-	"../repository"
+	"github.com/daleksprinter/share-post/repository"
+	"github.com/daleksprinter/share-post/model"
 	"github.com/gorilla/mux"
 	"github.com/jmoiron/sqlx"
 )

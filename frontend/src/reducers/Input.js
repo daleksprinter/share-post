@@ -1,12 +1,13 @@
 const initialState = {
-    inputs : []
+    inputs : ['']
 }
 
 export const inputReducer = (state = initialState, action) => {
     switch(action.type){
         case "add_input":
             const newState = Object.assign({}, state);
-            newState.inputs.push("this is sample text");
+            if(newState.inputs.length > 2) return state;
+            newState.inputs.push("");
             return newState;
 
         case "edit_input":

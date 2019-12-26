@@ -2,13 +2,13 @@ package auth
 
 import (
 
-	"../session"
+	"github.com/daleksprinter/share-post/session"
 	"golang.org/x/oauth2"
 
 	"context"
 
 	"net/http"
-	"github.com/satori/go.uuid"
+	"github.com/google/uuid"
 	"fmt"
 
 )
@@ -18,7 +18,7 @@ var(
 )
 
 func LoginHandler(w http.ResponseWriter, r *http.Request){
-	sessionID := uuid.Must(uuid.NewV4()).String()
+	sessionID := uuid.Must(uuid.NewRandom()).String()
 	oauthFlowSession, err := session.Store.New(r, sessionID)
 	if err != nil {
 		fmt.Fprintf(w, "could not create oauth session :%v", err)
