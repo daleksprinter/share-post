@@ -6,6 +6,7 @@ export const inputReducer = (state = initialState, action) => {
     switch(action.type){
         case "add_input":
             const newState = Object.assign({}, state);
+            if(newState.inputs.length > 2) return state;
             newState.inputs.push("");
             return newState;
 

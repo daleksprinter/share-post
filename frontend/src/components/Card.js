@@ -22,7 +22,7 @@ const useStyles = makeStyles({
     pos: {
       marginBottom: 12,
     },
-  });
+});
 
 function Card(props){
     const classes = useStyles();

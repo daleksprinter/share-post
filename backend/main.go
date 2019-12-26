@@ -6,13 +6,13 @@ import (
 	"net/http"
 	"os"
 
-	"./model"
 	"encoding/json"
+	"github.com/daleksprinter/share-post/model"
 
-	"./auth"
-	"./config"
-	"./controller"
-	"./session"
+	"github.com/daleksprinter/share-post/auth"
+	"github.com/daleksprinter/share-post/config"
+	"github.com/daleksprinter/share-post/controller"
+	"github.com/daleksprinter/share-post/session"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
