@@ -12,7 +12,7 @@ import (
 	"github.com/daleksprinter/share-post/auth"
 	"github.com/daleksprinter/share-post/config"
 	"github.com/daleksprinter/share-post/controller"
-	"github.com/daleksprinter/share-post/session"
+
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
@@ -50,16 +50,15 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	json.NewDecoder(r.Body).Decode(&card)
 	fmt.Println(card)
 
-	sess, err := session.Store.Get(r, session.SessionName)
-	if err != nil {
-		fmt.Fprintf(w, "could not get session")
-	}
-	tok, ok := sess.Values["oauthTokenSessionKey"].(string)
-	if !ok {
-		fmt.Fprint(w, "could not get token, please login")
+
+	user, err := auth.GetUserFromSession(r)
+	if err != nil{
+		fmt.Fprintf(w, "could not get user")
+		return
 	}
 
-	w.Write([]byte(tok))
+	fmt.Fprintf(w, user)
+
 }
 
 func NewRouter(db *sqlx.DB) *mux.Router {

@@ -55,10 +55,6 @@ func OAuthCallbackHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "could not get default session: %v")
 	}
 
-	if err != nil {
-		fmt.Fprintf(w, "could not fetch profile")
-	}
-
 	sess.Values["oauthTokenSessionKey"] = tok.AccessToken
 	if err := sess.Save(r, w); err != nil {
 		fmt.Fprintf(w, "could not save session")
@@ -70,8 +66,42 @@ func OAuthCallbackHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println("err:", err)
 	} else {
-		fmt.Println(ui.Email, ui.Picture)
+		print(ui)
+		SaveUserToSession(w, r, *ui)
 	}
 
 	http.Redirect(w, r, "http://localhost:8080/", http.StatusFound)
+}
+
+func SaveUserToSession(w http.ResponseWriter, r *http.Request, data oauthapi.Userinfoplus) error {
+	sess, err := session.Store.New(r, session.SessionName)
+	if err != nil {
+		fmt.Println("could not get session")
+		return err
+	}
+
+	sess.Values["userinfoemail"] = data.Email
+	if err := sess.Save(r, w); err != nil {
+		fmt.Println("could not save session")
+		return err
+	}
+
+	return nil
+}
+
+func GetUserFromSession(r *http.Request) (string, error) {
+	sess, err := session.Store.New(r, session.SessionName)
+	if err != nil {
+		fmt.Println("could not get session")
+		return "", err
+	}
+	user, ok := sess.Values["userinfoemail"].(string)
+	fmt.Println(user)
+	if !ok {
+		fmt.Println("could not get user data from session")
+		return "", err
+	}
+
+	return user, nil
+
 }
