@@ -3,6 +3,8 @@ import Room from "./containers/Room";
 import {DndProvider} from 'react-dnd';
 import Backend from 'react-dnd-html5-backend';
 import Login from './components/Login'
+import Home from './components/Home'
+import NavBar from './components/NavBar'
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
@@ -10,9 +12,10 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 const App = () => {
   return (
     <DndProvider backend = {Backend}>
+      <NavBar />
       <Router>
         <Switch>
-          
+            <Route exact path = '/' component = {Home} />
             <Route exact path = '/login' component = {Login} />
             <Route exact path = '/rooms/:id' component = {Room} />
         </Switch>
