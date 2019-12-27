@@ -9,18 +9,15 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 const App = () => {
   return (
-
-    <Router>
-      <Switch>
-        <Route exact path = '/login' component = {() => <Login />} />
-        <Route exact path = '/' component = {() => 
-          <DndProvider backend={Backend}>
-          <Room />
-          </DndProvider>
-        } />
-      </Switch>
-    </Router>
-    
+    <DndProvider backend = {Backend}>
+      <Router>
+        <Switch>
+          
+            <Route exact path = '/login' component = {Login} />
+            <Route exact path = '/rooms/:id' component = {Room} />
+        </Switch>
+      </Router>
+    </DndProvider>
   )
 }
 

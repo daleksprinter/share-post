@@ -10,15 +10,17 @@ class Room extends Component{
     }
 
     componentDidMount(){
+        const {params} = this.props.match
+        const room_id = params.id
 
-        const ws = new WebSocket(`ws://127.0.0.1:8080/ws/1`);
+        const ws = new WebSocket(`ws://127.0.0.1:8080/ws/${room_id}`);
         ws.addEventListener('message', function(e){
             console.log(e.data)
         })
 
 
         //get categories
-        const category_url = `http://localhost:8080/rooms/1/categories`
+        const category_url = `http://localhost:8080/rooms/${room_id}/categories`
         fetch(category_url).then(res => {
             return res.json()
         }).then(json => {
@@ -28,7 +30,7 @@ class Room extends Component{
         console.log(this.props)
 
         //get cards
-        const cards_url = `http://localhost:8080/rooms/1/cards`
+        const cards_url = `http://localhost:8080/rooms/${room_id}/cards`
         fetch(cards_url).then(res => {
             return res.json()
         }).then(json => {
