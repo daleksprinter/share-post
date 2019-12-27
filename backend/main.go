@@ -64,7 +64,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 
 func NewRouter(db *sqlx.DB) *mux.Router {
 	r := mux.NewRouter()
-	r.HandleFunc("/", Index).Methods("POST")
+	r.HandleFunc("/", Index)
 	r.HandleFunc("/login", auth.LoginHandler)
 	r.HandleFunc("/oauth2callback", auth.OAuthCallbackHandler)
 
