@@ -10,6 +10,13 @@ class Room extends Component{
     }
 
     componentDidMount(){
+
+        const ws = new WebSocket(`ws://127.0.0.1:8080/ws/1`);
+        ws.addEventListener('message', function(e){
+            console.log(e.data)
+        })
+
+
         //get categories
         const category_url = `http://localhost:8080/rooms/1/categories`
         fetch(category_url).then(res => {

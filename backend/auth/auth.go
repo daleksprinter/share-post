@@ -63,14 +63,15 @@ func OAuthCallbackHandler(w http.ResponseWriter, r *http.Request) {
 	client := OAuthConfig.Client(context.Background(), tok)
 	svr, err := oauthapi.New(client)
 	ui, err := svr.Userinfo.Get().Do()
+	fmt.Println(ui)
 	if err != nil {
 		fmt.Println("err:", err)
 	} else {
-		print(ui)
+		fmt.Println(ui.Email)
 		SaveUserToSession(w, r, *ui)
 	}
 
-	http.Redirect(w, r, "http://localhost:8080/", http.StatusFound)
+	http.Redirect(w, r, "http://localhost:3000/", http.StatusFound)
 }
 
 func SaveUserToSession(w http.ResponseWriter, r *http.Request, data oauthapi.Userinfoplus) error {
@@ -79,24 +80,29 @@ func SaveUserToSession(w http.ResponseWriter, r *http.Request, data oauthapi.Use
 		fmt.Println("could not get session")
 		return err
 	}
-
+	fmt.Println("save email", data.Email)
 	sess.Values["userinfoemail"] = data.Email
+	fmt.Println("when save", sess.Values)
 	if err := sess.Save(r, w); err != nil {
 		fmt.Println("could not save session")
 		return err
 	}
+	fmt.Println(sess.Values["userinfoemail"])
 
 	return nil
 }
 
 func GetUserFromSession(r *http.Request) (string, error) {
-	sess, err := session.Store.New(r, session.SessionName)
+	sess, err := session.Store.Get(r, session.SessionName)
+
 	if err != nil {
 		fmt.Println("could not get session")
 		return "", err
 	}
+
+	fmt.Println("session inseide", sess.Values)
 	user, ok := sess.Values["userinfoemail"].(string)
-	fmt.Println(user)
+	fmt.Println("got from session email ", user)
 	if !ok {
 		fmt.Println("could not get user data from session")
 		return "", err

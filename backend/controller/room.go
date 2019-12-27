@@ -3,6 +3,7 @@ package controller
 import (
 	"net/http"
 	"fmt"
+	"strconv"
 	"github.com/gorilla/mux"
 	"github.com/daleksprinter/share-post/websocket"
 
@@ -19,15 +20,17 @@ func NewRoom(db *sqlx.DB) *RoomController {
 	}
 }
 
+
+
 func (rc *RoomController) ServeWs(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["room_id"]
-
+	roomID, _ := strconv.Atoi(id)
 	fmt.Println(id)
-	room, ok := websocket.Rooms[id];
+	room, ok := websocket.Rooms[roomID];
 	if !ok {
-		room = *websocket.NewRoom(id)
-		websocket.Rooms[id] = room
+		room = *websocket.NewRoom(roomID)
+		websocket.Rooms[roomID] = room
 		go room.Run()
 	}
 
