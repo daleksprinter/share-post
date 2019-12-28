@@ -8,7 +8,6 @@ import(
 )
 
 func GetRoomByName(db *sqlx.DB, rn string) (model.Room, error) {
-	fmt.Println("room name is ", rn)
 	room := model.Room{}
 	if err := db.Get(&room, `select * from room where room_name = ?`, rn); err != nil {
 		fmt.Println(err)
@@ -16,4 +15,13 @@ func GetRoomByName(db *sqlx.DB, rn string) (model.Room, error) {
 	}
 	fmt.Println("room found", room)
 	return room, nil
+}
+
+func CreateRoom(db *sqlx.DB, r model.Room) error {
+
+	if _, err := db.Query("insert into room(room_name, created_user, is_private, hashed_password) values(?, ?, ?, ?)", r.RoomName, r.CreatedUser, r.IsPrivate, r.HashedPassword); err != nil {
+		return err
+	}
+	return nil
+
 }

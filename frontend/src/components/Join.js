@@ -7,6 +7,7 @@ class Join extends Component{
         this.state = {
             room_id_new: "",
             password_new: "",
+            isprivate: true,
 
             room_id_join: "",
             password_join: "",
@@ -14,13 +15,28 @@ class Join extends Component{
     }
 
     handlechangenew = (e) => {
-        this.setState({
-            room_id: e.target.value,
-        })
+        switch(e.target.id){
+            case 'roomname':
+                this.setState({
+                    room_id_new: e.target.value,
+                })
+                break
+            case 'password':
+                this.setState({
+                    password_new: e.target.value,
+                })
+                break
+        }
     }
 
     handleclicknew = (e) => {
-        this.props.history.push(`/rooms/${this.state.room_id}`)
+        const url = "http://localhost:8080/rooms"
+        const data = {
+            room_name: this.state.room_id_new,
+            is_private: this.state.isprivate,
+            hashed_password: (this.state.isprivate ? this.state.password_new : "")
+        }
+        console.log(data)
     }
 
     handlechangejoin = (e) => {
@@ -37,6 +53,12 @@ class Join extends Component{
                 break
         }
         console.log(this.state)
+    }
+
+    handlecheck = (e) => {
+        this.setState({
+            isprivate: !this.state.isprivate
+        })
     }
 
     handleclickjoin = (e) => {
@@ -67,7 +89,8 @@ class Join extends Component{
                 <div>this is home page</div>
 
                 <div>new room</div>
-                <input type = "text" onChange = {this.handlechangnew} placeholder = 'room name' id = "roomname"></input>
+                <input type = "text" onChange = {this.handlechangenew} placeholder = 'room name' id = "roomname"></input>
+                <input type = "checkbox" onChange = {this.handlecheck} checked = {this.state.isprivate}></input>
                 <input type = 'password' onChange = {this.handlechangenew} placeholder = 'password' id = "password"></input>
                 <button type = "button" onClick = {this.handleclicknew}>create</button>
 

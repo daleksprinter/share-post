@@ -3,16 +3,16 @@ package websocket
 import ()
 
 type Room struct {
-	Name       int
+	Name       string
 	Forward    chan *Message
 	Register   chan *Client
 	Unregister chan *Client
 	Clients    map[*Client]bool
 }
 
-var Rooms = make(map[int]Room)
+var Rooms = make(map[string]Room)
 
-func NewRoom(name int) *Room {
+func NewRoom(name string) *Room {
 	return &Room{
 		Name:       name,
 		Forward:    make(chan *Message),

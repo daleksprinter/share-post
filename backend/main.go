@@ -68,16 +68,16 @@ func NewRouter(db *sqlx.DB) *mux.Router {
 	r.HandleFunc("/oauth2callback", auth.OAuthCallbackHandler)
 
 	card := controller.NewCard(db)
-	r.HandleFunc("/rooms/{id}/cards", card.GetCardByRoomIDHandler)
-	r.HandleFunc("/rooms/{room_id}/categories/{category_id}/cards", card.GetCardByRoomIDAndCategoryHandler).Methods("GET")
-	r.HandleFunc("/rooms/{room_id}/categories/{category_id}/cards", card.PostCardByRoomIDAndCategorHandler).Methods("POST")
+	r.HandleFunc("/rooms/{roomname}/cards", card.GetCardByRoomIDHandler)
+	r.HandleFunc("/rooms/{roomname}/categories/{category_id}/cards", card.PostCardByRoomIDAndCategorHandler).Methods("POST")
 
 	category := controller.NewCategory(db)
-	r.HandleFunc("/rooms/{id}/categories", category.GetCategoryByRoomIDHandler)
+	r.HandleFunc("/rooms/{roomname}/categories", category.GetCategoryByRoomIDHandler)
 
 	room := controller.NewRoom(db)
-	r.HandleFunc("/ws/{room_id}", room.ServeWs).Methods("GET")
+	r.HandleFunc("/ws/{roomname}", room.ServeWs).Methods("GET")
 	r.HandleFunc("/isroomexist", room.IsRoomExist).Methods("POST")
+	r.HandleFunc("/rooms", room.CreateRoomHandler).Methods("POST")
 
 	r.HandleFunc("/isloggedin", controller.IsLoggedIn).Methods("GET")
 
