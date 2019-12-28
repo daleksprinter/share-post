@@ -36,7 +36,17 @@ class Join extends Component{
             is_private: this.state.isprivate,
             hashed_password: (this.state.isprivate ? this.state.password_new : "")
         }
-        console.log(data)
+        fetch(url, {
+            method: "POST",
+            headers: {
+                'Content-type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        }).then(res => {
+            return res.text()
+        }).then(txt => {
+            this.props.history.push(`/rooms/${txt}`)
+        })
     }
 
     handlechangejoin = (e) => {

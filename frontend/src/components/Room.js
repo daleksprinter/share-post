@@ -19,7 +19,6 @@ class Room extends Component{
         ws.addEventListener('message', function(e){
             const data = JSON.parse(e.data)
             data.id = "New"
-            console.log(data)
             p.addCard(data)
         })
 
