@@ -26,11 +26,11 @@ func NewCard(db *sqlx.DB) *Card {
 
 func (c *Card) GetCardByRoomIDHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	id := vars["id"]
+	roomname := vars["roomname"]
 
-	roomID, _ := strconv.Atoi(id)
+	room, _ := repository.GetRoomByName(c.db, roomname)
 
-	cards, _ := repository.GetCardByRoomID(c.db, roomID)
+	cards, _ := repository.GetCardByRoomID(c.db, room.ID)
 
 	res, _ := json.Marshal(cards)
 
@@ -39,47 +39,38 @@ func (c *Card) GetCardByRoomIDHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func (c *Card) GetCardByRoomIDAndCategoryHandler(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	room := vars["room_id"]
-	category := vars["category_id"]
-
-	roomID, _ := strconv.Atoi(room)
-	categoryID, _ := strconv.Atoi(category)
-
-	cards, _ := repository.GetCardByRoomIDAndCategory(c.db, roomID, categoryID)
-
-	res, _ := json.Marshal(cards)
-
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(res)
-}
 
 func (c *Card) PostCardByRoomIDAndCategorHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	room := vars["room_id"]
+	roomname := vars["roomname"]
 	category := vars["category_id"]
 
-	roomID, _ := strconv.Atoi(room)
+
+	fmt.Println("posted room ---",roomname)
+	room, _ := repository.GetRoomByName(c.db, roomname)
+	fmt.Println(room)
 	categoryID, _ := strconv.Atoi(category)
+
+	user, err := repository.GetUserFromSession(c.db, r)
+	if err != nil {
+		fmt.Println("could not auth user. please login", err)
+	}
 
 	var ca model.Card
 	json.NewDecoder(r.Body).Decode(&ca)
 	ca.ColorCode = "FFFFFF"
-	ca.RoomID = roomID
+	ca.RoomID = room.ID
 	ca.CategoryID = categoryID
-	ca.CreatedUser = 1
+	ca.CreatedUser = user.ID
 
 	fmt.Println(ca)
-	err := repository.PostCardByRoomIDAndCategory(c.db, ca)
+	err = repository.PostCardByRoomIDAndCategory(c.db, ca)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	websocket.Rooms[roomID].Forward <- &websocket.Message{
-		Msg: ca.Content,
-	}
+	websocket.Rooms[roomname].Forward <- &ca
 
 	w.Header().Set("Content-Type", "application/json")
 	fmt.Fprintf(w, "suc")

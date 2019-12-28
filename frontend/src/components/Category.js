@@ -6,8 +6,12 @@ import {useDrop} from 'react-dnd';
 
 function Category(props){
 
+
     const post_card = (txt, id) => {
-        const url = `http://localhost:8080/rooms/1/categories/${props.data.id}/cards`;
+        const {params} = props.match
+        const room_id = params.id
+        console.log(room_id)
+        const url = `http://localhost:8080/rooms/${room_id}/categories/${props.data.id}/cards`;
         fetch(url, {
             method: "POST",
             headers: {
@@ -17,14 +21,7 @@ function Category(props){
                 content: txt
             })
         }).then(res => {
-        //   props.deleteInput(id)
-        //   props.addCard({
-        //       id:"new",
-        //       content: txt,
-        //       room_id:1,
-        //       category_id: props.data.id,
-        //   })
-        //   console.log(props.category)
+            console.log("post succeed")
         })
     }
 

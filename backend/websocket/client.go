@@ -3,8 +3,7 @@ package websocket
 import (
 	"log"
 	"net/http"
-	//	"github.com/daleksprinter/share-post/auth"
-	//	"github.com/daleksprinter/share-post/session"
+	"github.com/daleksprinter/share-post/model"	
 	"fmt"
 
 	"github.com/gorilla/websocket"
@@ -13,7 +12,7 @@ import (
 type Client struct {
 	Room *Room
 	Conn *websocket.Conn
-	Send chan *Message
+	Send chan *model.Card
 }
 
 var Clients = make(map[string]Client)
@@ -30,7 +29,7 @@ func NewClient(room *Room, w http.ResponseWriter, r *http.Request) Client {
 		return Client{}
 	}
 
-	client := &Client{Room: room, Conn: conn, Send: make(chan *Message)}
+	client := &Client{Room: room, Conn: conn, Send: make(chan *model.Card)}
 	client.Room.Register <- client
 
 	if err != nil {

@@ -4,8 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"strconv"
-
+	"fmt"
 	"github.com/daleksprinter/share-post/repository"
 	"github.com/gorilla/mux"
 	"github.com/jmoiron/sqlx"
@@ -23,11 +22,14 @@ func NewCategory(db *sqlx.DB) *Category {
 
 func (c *Category) GetCategoryByRoomIDHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	id := vars["id"]
+	roomname := vars["roomname"]
 
-	roomID, _ := strconv.Atoi(id)
+	room, err := repository.GetRoomByName(c.db, roomname)
+	if err != nil{
+		fmt.Println("could not get room", err)
+	}
 
-	cards, _ := repository.GetCategoriesByRoomID(c.db, roomID)
+	cards, _ := repository.GetCategoriesByRoomID(c.db, room.ID)
 
 	res, _ := json.Marshal(cards)
 

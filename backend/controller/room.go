@@ -3,11 +3,11 @@ package controller
 import (
 	"net/http"
 	"fmt"
-	"strconv"
 	"github.com/gorilla/mux"
 	"github.com/daleksprinter/share-post/websocket"
 	"github.com/daleksprinter/share-post/model"
 	"github.com/daleksprinter/share-post/repository"
+
 
 	"github.com/jmoiron/sqlx"
 	"encoding/json"
@@ -27,13 +27,11 @@ func NewRoom(db *sqlx.DB) *RoomController {
 
 func (rc *RoomController) ServeWs(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	id := vars["room_id"]
-	roomID, _ := strconv.Atoi(id)
-	fmt.Println(id)
-	room, ok := websocket.Rooms[roomID];
+	roomname := vars["roomname"]
+	room, ok := websocket.Rooms[roomname];
 	if !ok {
-		room = *websocket.NewRoom(roomID)
-		websocket.Rooms[roomID] = room
+		room = *websocket.NewRoom(roomname)
+		websocket.Rooms[roomname] = room
 		go room.Run()
 	}
 
@@ -47,14 +45,33 @@ func (rc *RoomController) IsRoomExist(w http.ResponseWriter, r * http.Request){
 	var posted_room model.Room
 	
 	json.NewDecoder(r.Body).Decode(&posted_room)
-	fmt.Println(posted_room)
 	room, _ := repository.GetRoomByName(rc.db, posted_room.RoomName)
 
-	fmt.Println(room)
-
 	if room.RoomName != "" && (!room.IsPrivate || posted_room.HashedPassword == room.HashedPassword) {
-		fmt.Fprintf(w, strconv.Itoa(room.ID))
+		fmt.Fprintf(w, room.RoomName)
 	}else {
-		fmt.Fprintf(w, "0")
+		fmt.Fprintf(w, "")
 	}
+}
+
+func(rc *RoomController) CreateRoomHandler(w http.ResponseWriter, r *http.Request){
+	var room model.Room
+
+	json.NewDecoder(r.Body).Decode(&room)
+
+	user, err := repository.GetUserFromSession(rc.db, r)
+	if err != nil {
+		fmt.Println("could not get user from request", err)
+	}
+
+	room.CreatedUser = user.ID
+
+	err = repository.CreateRoom(rc.db, room)
+
+	if err != nil {
+		fmt.Println("can't insert room to db", err)
+	}
+
+	fmt.Fprintf(w, room.RoomName)
+
 }
