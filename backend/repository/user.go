@@ -11,7 +11,7 @@ import (
 
 func GetUserByEmail(db *sqlx.DB, email string) (model.User, error) {
 	user := model.User{}
-	if err := db.Get(&user, `select * from room where email = ?`, email); err != nil {
+	if err := db.Get(&user, `select * from user where email = ?`, email); err != nil {
 		fmt.Println(err)
 		return model.User{}, err
 	}
@@ -25,7 +25,7 @@ func GetUserFromSession(db *sqlx.DB, r *http.Request) (model.User, error){
 	if err != nil {
 		return model.User{}, err
 	}
-
+	fmt.Println("username", email)
 	user, err := GetUserByEmail(db, email)
 	if err != nil {
 		return model.User{}, err

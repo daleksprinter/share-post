@@ -52,7 +52,6 @@ class Join extends Component{
                 })
                 break
         }
-        console.log(this.state)
     }
 
     handlecheck = (e) => {
@@ -75,7 +74,7 @@ class Join extends Component{
         }).then((res) => {
             return res.text()
         }).then((txt) => {
-            if(txt != "0"){
+            if(txt != ""){
                 this.props.history.push(`/rooms/${txt}`)
             }else{
                 console.log("room not found")
@@ -91,7 +90,7 @@ class Join extends Component{
                 <div>new room</div>
                 <input type = "text" onChange = {this.handlechangenew} placeholder = 'room name' id = "roomname"></input>
                 <input type = "checkbox" onChange = {this.handlecheck} checked = {this.state.isprivate}></input>
-                <input type = 'password' onChange = {this.handlechangenew} placeholder = 'password' id = "password"></input>
+                {this.state.isprivate ? <input type = 'password' onChange = {this.handlechangenew} placeholder = 'password' id = "password"></input> : <span />}
                 <button type = "button" onClick = {this.handleclicknew}>create</button>
 
                 <div>join room</div>

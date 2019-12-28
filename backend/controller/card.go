@@ -42,10 +42,13 @@ func (c *Card) GetCardByRoomIDHandler(w http.ResponseWriter, r *http.Request) {
 
 func (c *Card) PostCardByRoomIDAndCategorHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	roomname := vars["room_id"]
+	roomname := vars["roomname"]
 	category := vars["category_id"]
 
+
+	fmt.Println("posted room ---",roomname)
 	room, _ := repository.GetRoomByName(c.db, roomname)
+	fmt.Println(room)
 	categoryID, _ := strconv.Atoi(category)
 
 	user, err := repository.GetUserFromSession(c.db, r)
@@ -67,9 +70,7 @@ func (c *Card) PostCardByRoomIDAndCategorHandler(w http.ResponseWriter, r *http.
 		return
 	}
 
-	websocket.Rooms[roomname].Forward <- &websocket.Message{
-		Msg: ca.Content,
-	}
+	websocket.Rooms[roomname].Forward <- &ca
 
 	w.Header().Set("Content-Type", "application/json")
 	fmt.Fprintf(w, "suc")

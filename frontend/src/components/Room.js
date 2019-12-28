@@ -50,7 +50,7 @@ class Room extends Component{
                     {this.props.room.categories.map(category => {
                         return (
                             <div>
-                                <Category data = {category} />
+                                <Category data = {category} match = {this.props.match}/>
                             </div>
                         )
                     })}
