@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-
+import { withRouter } from 'react-router';
 
 class NavBar extends Component{
     constructor(){
@@ -20,14 +20,19 @@ class NavBar extends Component{
         })
     }
 
+    handleclick = (e) => {
+        this.props.history.push(`/`)
+    }
+
     render(){
         return(
-            <div>
-                <div>this is navbar page</div>
-                <span>{this.state.username == "" ? <div>please login</div> : <div>{this.state.username}</div>}</span>                
-            </div>
+            <span>
+                <button onClick = {this.handleclick}>Share-Pos</button>
+                <span>this is navbar</span>
+                <span>{this.state.username == "" ? <span>please login</span> : <span>{this.state.username}</span>}</span>                
+            </span>
         )
     }
 }
 
-export default NavBar;
+export default withRouter(NavBar);

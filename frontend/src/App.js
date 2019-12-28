@@ -12,8 +12,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 const App = () => {
   return (
     <DndProvider backend = {Backend}>
-      <NavBar />
       <Router>
+        <NavBar />
         <Switch>
             <Route exact path = '/' component = {Home} />
             <Route exact path = '/join' component = {Join} />
