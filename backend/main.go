@@ -78,6 +78,8 @@ func NewRouter(db *sqlx.DB) *mux.Router {
 	room := controller.NewRoom(db)
 	r.HandleFunc("/ws/{room_id}", room.ServeWs).Methods("GET")
 
+	r.HandleFunc("/isloggedin", controller.IsLoggedIn).Methods("GET")
+
 	return r
 }
 

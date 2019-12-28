@@ -5,7 +5,7 @@ import Backend from 'react-dnd-html5-backend';
 import Login from './components/Login'
 import Home from './components/Home'
 import NavBar from './components/NavBar'
-
+import Join from './components/Join'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 
@@ -16,6 +16,7 @@ const App = () => {
       <Router>
         <Switch>
             <Route exact path = '/' component = {Home} />
+            <Route exact path = '/join' component = {Join} />
             <Route exact path = '/login' component = {Login} />
             <Route exact path = '/rooms/:id' component = {Room} />
         </Switch>
