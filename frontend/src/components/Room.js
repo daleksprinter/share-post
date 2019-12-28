@@ -13,9 +13,14 @@ class Room extends Component{
         const {params} = this.props.match
         const room_id = params.id
 
+        const p = this.props
+
         const ws = new WebSocket(`ws://127.0.0.1:8080/ws/${room_id}`);
         ws.addEventListener('message', function(e){
-            console.log(e.data)
+            const data = JSON.parse(e.data)
+            data.id = "New"
+            console.log(data)
+            p.addCard(data)
         })
 
 
@@ -70,3 +75,5 @@ class Room extends Component{
 }
 
 export default Room;
+
+

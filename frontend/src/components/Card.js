@@ -11,17 +11,6 @@ const useStyles = makeStyles({
       height:"200px",
       display:"inline-block",
     },
-    bullet: {
-      display: 'inline-block',
-      margin: '0 2px',
-      transform: 'scale(0.8)',
-    },
-    title: {
-      fontSize: 14,
-    },
-    pos: {
-      marginBottom: 12,
-    },
 });
 
 function Card(props){
