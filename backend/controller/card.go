@@ -4,11 +4,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-
 	"strconv"
 
-	"github.com/daleksprinter/share-post/repository"
 	"github.com/daleksprinter/share-post/model"
+	"github.com/daleksprinter/share-post/repository"
+
+	"github.com/daleksprinter/share-post/websocket"
 	"github.com/gorilla/mux"
 	"github.com/jmoiron/sqlx"
 )
@@ -74,6 +75,10 @@ func (c *Card) PostCardByRoomIDAndCategorHandler(w http.ResponseWriter, r *http.
 	if err != nil {
 		fmt.Println(err)
 		return
+	}
+
+	websocket.Rooms[roomID].Forward <- &websocket.Message{
+		Msg: ca.Content,
 	}
 
 	w.Header().Set("Content-Type", "application/json")

@@ -2,6 +2,7 @@
 -- +goose Up
 create table room(
     id int primary key auto_increment,
+    room_name varchar(255) not null,
     created_user int not null,
     is_private boolean not null,
     hashed_password varchar(255),

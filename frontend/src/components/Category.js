@@ -17,14 +17,14 @@ function Category(props){
                 content: txt
             })
         }).then(res => {
-          props.deleteInput(id)
-          props.addCard({
-              id:"new",
-              content: txt,
-              room_id:1,
-              category_id: props.data.id,
-          })
-          console.log(props.category)
+        //   props.deleteInput(id)
+        //   props.addCard({
+        //       id:"new",
+        //       content: txt,
+        //       room_id:1,
+        //       category_id: props.data.id,
+        //   })
+        //   console.log(props.category)
         })
     }
 
