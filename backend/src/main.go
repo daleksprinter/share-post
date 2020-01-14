@@ -37,8 +37,9 @@ func NewServer() *Server {
 // }
 
 func NewDB() (*sqlx.DB, error) {
-	db, err := sqlx.Open("mysql", "root:password@tcp/share_pos")
+	db, err := sqlx.Open("mysql", "root:password@tcp(share-pos-db)/share_pos")
 	if err != nil {
+		fmt.Println("---------------------could not connect to database!!!!!!!!!!!!!!!!___________________")
 		return nil, err
 	}
 	return db, nil
@@ -118,7 +119,7 @@ func main() {
 	}
 
 	s := NewServer()
-	s.Init("root:password@tcp(0.0.0.0:3306)/share_pos")
+	s.Init("root:password@tcp(:3306)/share_pos")
 	s.Run(datasource)
 
 	defer s.db.Close()
