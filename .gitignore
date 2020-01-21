@@ -4,3 +4,4 @@ backend/src/.env
 frontend/app/.env
 
 database/db/dbconf.yml
+database/.env
