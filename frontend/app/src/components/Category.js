@@ -11,7 +11,7 @@ function Category(props){
         const {params} = props.match
         const room_id = params.id
         console.log(room_id)
-        const url = `http://localhost:8080/rooms/${room_id}/categories/${props.data.id}/cards`;
+        const url = `http://share-pos-backend:8080/rooms/${room_id}/categories/${props.data.id}/cards`;
         fetch(url, {
             method: "POST",
             headers: {

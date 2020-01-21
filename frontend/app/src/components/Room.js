@@ -15,7 +15,7 @@ class Room extends Component{
 
         const p = this.props
 
-        const ws = new WebSocket(`ws://127.0.0.1:8080/ws/${room_id}`);
+        const ws = new WebSocket(`ws://share-pos-backend:8080/ws/${room_id}`);
         ws.addEventListener('message', function(e){
             const data = JSON.parse(e.data)
             data.id = "New"
@@ -24,7 +24,7 @@ class Room extends Component{
 
 
         //get categories
-        const category_url = `http://localhost:8080/rooms/${room_id}/categories`
+        const category_url = `http://share-pos-backend:8080/rooms/${room_id}/categories`
         fetch(category_url).then(res => {
             return res.json()
         }).then(json => {
@@ -34,7 +34,7 @@ class Room extends Component{
         console.log(this.props)
 
         //get cards
-        const cards_url = `http://localhost:8080/rooms/${room_id}/cards`
+        const cards_url = `http://share-pos-backend:8080/rooms/${room_id}/cards`
         fetch(cards_url).then(res => {
             return res.json()
         }).then(json => {

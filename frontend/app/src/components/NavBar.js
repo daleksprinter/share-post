@@ -10,7 +10,7 @@ class NavBar extends Component{
     }
 
     componentDidMount(){
-        const url = "http://localhost:8080/isloggedin"
+        const url = `http://share-pos-backend:8080/isloggedin`
         fetch(url).then(res => {
             return res.text()
         }).then(txt => {

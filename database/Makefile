@@ -1,8 +1,13 @@
 DBNAME:=share_pos
-DATASOURCE:=root:password@tcp(0.0.0.0:3306)/$(DBNAME)
-PASSWORD:=password
+LOCAL_DATASOURCE:=root:password@tcp(0.0.0.0:3306)/$(DBNAME)
+LOCAL_PASSWORD:=password
+
+include ./.env
 
 GOOSE:=/Users/ryomac/go/bin/goose
+
+cat:
+	echo $(PROD_DATASOURCE)
 
 migrate/init:
 	mysql -u root -h 0.0.0.0 --protocol tcp -e "create database \`$(DBNAME)\`" -p

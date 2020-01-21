@@ -9,5 +9,4 @@ RUN npm install
 COPY ./app/public ./public
 COPY ./app/src ./src
 
-
-
+CMD [ "npm", "start" ]

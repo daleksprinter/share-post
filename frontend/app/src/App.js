@@ -10,6 +10,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 
 const App = () => {
+  console.log(`${process.env.BACKEND_URL}isloggedin`)
   return (
     <DndProvider backend = {Backend}>
       <Router>
