@@ -39,7 +39,7 @@ func (c *Card) GetCardByRoomNameHandler(w http.ResponseWriter, r *http.Request) 
 
 }
 
-func (c *Card) PostCardByRoomIDAndCategorHandler(w http.ResponseWriter, r *http.Request) {
+func (c *Card) PostCardHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	roomname := vars["roomname"]
 	category := vars["category_id"]
@@ -49,15 +49,17 @@ func (c *Card) PostCardByRoomIDAndCategorHandler(w http.ResponseWriter, r *http.
 
 	user, err := repository.GetUserFromSession(c.db, r)
 	if err != nil {
-		fmt.Println("could not auth user. please login", err)
+		fmt.Println(err)
+		return
 	}
 
-	var ca model.Card
+	ca := model.Card{
+		ColorCode:   "FFFFFF",
+		RoomID:      room.ID,
+		CategoryID:  categoryID,
+		CreatedUser: user.ID,
+	}
 	json.NewDecoder(r.Body).Decode(&ca)
-	ca.ColorCode = "FFFFFF"
-	ca.RoomID = room.ID
-	ca.CategoryID = categoryID
-	ca.CreatedUser = user.ID
 
 	err = repository.PostCard(c.db, ca)
 	if err != nil {
