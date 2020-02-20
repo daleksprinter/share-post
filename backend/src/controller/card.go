@@ -24,7 +24,7 @@ func NewCard(db *sqlx.DB) *Card {
 	}
 }
 
-func (c *Card) GetCardByRoomIDHandler(w http.ResponseWriter, r *http.Request) {
+func (c *Card) GetCardByRoomNameHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	roomname := vars["roomname"]
 
@@ -44,9 +44,7 @@ func (c *Card) PostCardByRoomIDAndCategorHandler(w http.ResponseWriter, r *http.
 	roomname := vars["roomname"]
 	category := vars["category_id"]
 
-	fmt.Println("posted room ---", roomname)
 	room, _ := repository.GetRoomByName(c.db, roomname)
-	fmt.Println(room)
 	categoryID, _ := strconv.Atoi(category)
 
 	user, err := repository.GetUserFromSession(c.db, r)
