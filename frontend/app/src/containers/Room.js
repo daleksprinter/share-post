@@ -14,6 +14,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         addCategory : (category) => dispatch(room_actions.addCategory(category)),
+	setCategories : (categories) => dispatch(room_actions.setCategories(categories)),
         addCard : (card) => dispatch(category_actions.addCard(card)),
 	setCards : (cards) => dispatch(category_actions.setCards(cards)),
         addInput: () => dispatch(input_actions.addArea()),

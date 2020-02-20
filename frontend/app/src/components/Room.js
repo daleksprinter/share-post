@@ -12,7 +12,6 @@ class Room extends Component{
     componentDidMount(){
         const {params} = this.props.match
         const room_id = params.id
-	console.log(room_id)
         const p = this.props
 
         const ws = new WebSocket(`ws://${process.env.REACT_APP_BACKEND_HOST}/ws/${room_id}`);
@@ -28,10 +27,9 @@ class Room extends Component{
         fetch(category_url).then(res => {
             return res.json()
         }).then(json => {
-            for(const category of json) this.props.addCategory(category)
+		this.props.setCategories(json)
         })
 
-        console.log(this.props)
 
         //get cards
         const cards_url = `/rooms/${room_id}/cards`

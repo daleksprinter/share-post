@@ -6,3 +6,12 @@ export const addCategory = (data) => {
         }
     };
 }
+
+export const setCategories = (data) => {
+	return {
+		type : 'set_categories',
+		payload : {
+			categories : data
+		}
+	}
+}
