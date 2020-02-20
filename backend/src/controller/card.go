@@ -39,14 +39,12 @@ func (c *Card) GetCardByRoomIDHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 
-
 func (c *Card) PostCardByRoomIDAndCategorHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	roomname := vars["roomname"]
 	category := vars["category_id"]
 
-
-	fmt.Println("posted room ---",roomname)
+	fmt.Println("posted room ---", roomname)
 	room, _ := repository.GetRoomByName(c.db, roomname)
 	fmt.Println(room)
 	categoryID, _ := strconv.Atoi(category)
@@ -63,8 +61,7 @@ func (c *Card) PostCardByRoomIDAndCategorHandler(w http.ResponseWriter, r *http.
 	ca.CategoryID = categoryID
 	ca.CreatedUser = user.ID
 
-	fmt.Println(ca)
-	err = repository.PostCardByRoomIDAndCategory(c.db, ca)
+	err = repository.PostCard(c.db, ca)
 	if err != nil {
 		fmt.Println(err)
 		return

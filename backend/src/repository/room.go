@@ -1,7 +1,6 @@
 package repository
 
 import (
-	"fmt"
 	"github.com/daleksprinter/share-post/model"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/jmoiron/sqlx"
