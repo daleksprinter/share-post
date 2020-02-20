@@ -13,7 +13,7 @@ class Login extends Component{
     render(){
         return(
             <div>
-                <a href = 'http://share-pos-backend:8080/login' >Login Google</a>
+                <a href = '/login' >Login Google</a>
             </div>
         )
     }

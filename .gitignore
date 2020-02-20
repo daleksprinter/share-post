@@ -5,3 +5,8 @@ frontend/app/.env
 
 database/db/dbconf.yml
 database/.env
+
+
+
+*.swp
+*.swo

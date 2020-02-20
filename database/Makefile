@@ -1,3 +1,4 @@
+GOOSE=$(which goose)
 include ./.env
 
 migrate/create:

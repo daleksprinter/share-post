@@ -80,9 +80,7 @@ func SaveUserToSession(w http.ResponseWriter, r *http.Request, data oauthapi.Use
 		fmt.Println("could not get session")
 		return err
 	}
-	fmt.Println("save email", data.Email)
 	sess.Values["userinfoemail"] = data.Email
-	fmt.Println("when save", sess.Values)
 	if err := sess.Save(r, w); err != nil {
 		fmt.Println("could not save session")
 		return err
@@ -100,9 +98,7 @@ func GetUserFromSession(r *http.Request) (string, error) {
 		return "", err
 	}
 
-	fmt.Println("session inseide", sess.Values)
 	user, ok := sess.Values["userinfoemail"].(string)
-	fmt.Println("got from session email ", user)
 	if !ok {
 		fmt.Println("could not get user data from session")
 		return "", err

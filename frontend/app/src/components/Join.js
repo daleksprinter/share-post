@@ -30,7 +30,7 @@ class Join extends Component{
     }
 
     handleclicknew = (e) => {
-        const url = `http://share-pos-backend:8080/rooms`
+        const url = `/rooms`
         const data = {
             room_name: this.state.room_id_new,
             is_private: this.state.isprivate,
@@ -71,7 +71,7 @@ class Join extends Component{
     }
 
     handleclickjoin = (e) => {
-        const url = `http://share-pos-backend:8080/isroomexist`;
+        const url = `/isroomexist`;
         fetch(url, {
             method:"POST",
             headers: {

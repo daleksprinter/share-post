@@ -13,7 +13,6 @@ import (
 	"github.com/daleksprinter/share-post/config"
 	"github.com/daleksprinter/share-post/controller"
 
-
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 
@@ -37,7 +36,7 @@ func NewServer() *Server {
 // }
 
 func NewDB() (*sqlx.DB, error) {
-	db, err := sqlx.Open("mysql", "root:password@tcp(share-pos-db)/share_pos")
+	db, err := sqlx.Open("mysql", "root:password@tcp(0.0.0.0)/share_pos")
 	if err != nil {
 		fmt.Println("---------------------could not connect to database!!!!!!!!!!!!!!!!___________________")
 		return nil, err
@@ -51,9 +50,8 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	json.NewDecoder(r.Body).Decode(&card)
 	fmt.Println(card)
 
-
 	user, err := auth.GetUserFromSession(r)
-	if err != nil{
+	if err != nil {
 		fmt.Fprintf(w, "could not get user")
 		return
 	}
@@ -109,13 +107,13 @@ func (s *Server) Run(addr string) {
 
 func main() {
 	err := godotenv.Load()
-	auth.OAuthConfig = config.ConfigureOAuthClient()
 	if err != nil {
 		log.Fatalf("error loading .env file. %s", err)
 	}
-	datasource := os.Getenv("DATABASE_DATASOURCE")
+	auth.OAuthConfig = config.ConfigureOAuthClient()
+	datasource := os.Getenv("DATASOURCE")
 	if datasource == "" {
-		log.Fatal("Cannot get datasource for database.")
+		log.Fatal("Cannot get datasource")
 	}
 
 	s := NewServer()
