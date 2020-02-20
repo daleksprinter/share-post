@@ -43,10 +43,15 @@ class Join extends Component{
             },
             body: JSON.stringify(data),
         }).then(res => {
-            return res.text()
+		if (!res.ok){
+			 throw Error(res.statusText);
+		}
+		return res.text()
         }).then(txt => {
-            this.props.history.push(`/rooms/${txt}`)
-        })
+            this.props.history.push(`/rooms/${this.state.room_id_new}`)
+	}).catch(err => {
+		console.log(err)
+	})
     }
 
     handlechangejoin = (e) => {

@@ -64,7 +64,6 @@ func NewRouter(db *sqlx.DB) *mux.Router {
 
 	room := controller.NewRoom(db)
 	r.HandleFunc("/ws/{roomname}", room.ServeWs).Methods("GET")
-	r.HandleFunc("/isroomexist", room.IsRoomExist).Methods("POST")
 	r.HandleFunc("/rooms", room.CreateRoomHandler).Methods("POST")
 
 	r.HandleFunc("/isloggedin", controller.IsLoggedIn).Methods("GET")
