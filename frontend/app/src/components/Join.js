@@ -76,25 +76,25 @@ class Join extends Component{
     }
 
     handleclickjoin = (e) => {
-        const url = `/isroomexist`;
+        const url = `/rooms/${this.state.room_id_join}`;
         fetch(url, {
             method:"POST",
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
             },
             body: JSON.stringify({
-                room_name: this.state.room_id_join,
                 hashed_password: this.state.password_join,
             })
         }).then((res) => {
+		if(!res.ok) {
+			throw Error(res.statusText);
+		}
             return res.text()
         }).then((txt) => {
-            if(txt != ""){
-                this.props.history.push(`/rooms/${txt}`)
-            }else{
-                console.log("room not found")
-            }
-        })
+                this.props.history.push(`/rooms/${this.state.room_id_join}`)
+	}).catch(txt => {
+		console.log(txt)
+	})
     }
 
     render(){

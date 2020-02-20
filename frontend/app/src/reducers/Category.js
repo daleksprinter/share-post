@@ -1,16 +1,28 @@
 const initialState = {
-    cards : []
+	cards : []
 }
 
 export const categoryReducer = (state = initialState, action) => {
-    switch(action.type){
-        case "add_card":
-            const card = action.payload.card;
-            const newState = Object.assign({}, state);
-            newState.cards.push(card);
-            return newState;
+	switch(action.type){
+		case "set_cards": {
 
-        default :
-            return state;
-    }
+			let cards = action.payload.cards;
+			let newState = Object.assign({}, state);
+			newState.cards = cards;
+			return newState
+
+
+		}     
+		case "add_card":{
+
+			let card = action.payload.card;
+			let newState = Object.assign({}, state);
+			newState.cards.push(card);
+			return newState;
+
+
+		}
+		default :
+			return state;
+	}
 }

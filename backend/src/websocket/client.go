@@ -1,10 +1,10 @@
 package websocket
 
 import (
+	"fmt"
+	"github.com/daleksprinter/share-post/model"
 	"log"
 	"net/http"
-	"github.com/daleksprinter/share-post/model"	
-	"fmt"
 
 	"github.com/gorilla/websocket"
 )

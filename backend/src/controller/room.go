@@ -60,3 +60,29 @@ func (rc *RoomController) CreateRoomHandler(w http.ResponseWriter, r *http.Reque
 
 	w.WriteHeader(http.StatusCreated)
 }
+
+func (rc *RoomController) JoinRoomHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	roomname := vars["roomname"]
+
+	p := struct {
+		Password string `json: "hashed_password"`
+	}{}
+	json.NewDecoder(r.Body).Decode(&p)
+
+	room, err := repository.GetRoomByName(rc.db, roomname)
+	if err != nil {
+		fmt.Println(err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	if room.HashedPassword != p.Password {
+		fmt.Println("password not match")
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+
+}
