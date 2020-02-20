@@ -6,9 +6,6 @@ import (
 	"net/http"
 	"os"
 
-	"encoding/json"
-	"github.com/daleksprinter/share-post/model"
-
 	"github.com/daleksprinter/share-post/auth"
 	"github.com/daleksprinter/share-post/config"
 	"github.com/daleksprinter/share-post/controller"
@@ -31,14 +28,10 @@ func NewServer() *Server {
 	return &Server{}
 }
 
-// func NewDB(datasource string) (*sql.DB, error) {
-// 	return sql.Open("mysql", datasource)
-// }
-
 func NewDB() (*sqlx.DB, error) {
 	db, err := sqlx.Open("mysql", "root:password@tcp(0.0.0.0)/share_pos")
 	if err != nil {
-		fmt.Println("---------------------could not connect to database!!!!!!!!!!!!!!!!___________________")
+		fmt.Println(err)
 		return nil, err
 	}
 	return db, nil
@@ -46,13 +39,9 @@ func NewDB() (*sqlx.DB, error) {
 
 func Index(w http.ResponseWriter, r *http.Request) {
 
-	var card model.Card
-	json.NewDecoder(r.Body).Decode(&card)
-	fmt.Println(card)
-
 	user, err := auth.GetUserFromSession(r)
 	if err != nil {
-		fmt.Fprintf(w, "could not get user")
+		fmt.Println(err)
 		return
 	}
 
@@ -83,14 +72,13 @@ func NewRouter(db *sqlx.DB) *mux.Router {
 	return r
 }
 
-func (s *Server) Init(datasource string) {
+func (s *Server) Init() {
 	db, err := NewDB()
 	if err != nil {
-		log.Fatal("failed to connect DB. %s", err)
+		panic(err)
 	}
 
 	s.db = db
-
 	s.router = NewRouter(db)
 }
 
@@ -108,16 +96,16 @@ func (s *Server) Run(addr string) {
 func main() {
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatalf("error loading .env file. %s", err)
+		panic(err)
 	}
 	auth.OAuthConfig = config.ConfigureOAuthClient()
 	datasource := os.Getenv("DATASOURCE")
 	if datasource == "" {
-		log.Fatal("Cannot get datasource")
+		datasource = ":8080"
 	}
 
 	s := NewServer()
-	s.Init("root:password@tcp(:3306)/share_pos")
+	s.Init()
 	s.Run(datasource)
 
 	defer s.db.Close()
