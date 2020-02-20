@@ -67,7 +67,7 @@ func NewRouter(db *sqlx.DB) *mux.Router {
 	r.HandleFunc("/oauth2callback", auth.OAuthCallbackHandler)
 
 	card := controller.NewCard(db)
-	r.HandleFunc("/rooms/{roomname}/cards", card.GetCardByRoomNameHandler)
+	r.HandleFunc("/rooms/{roomname}/cards", card.GetCardsByRoomNameHandler)
 	r.HandleFunc("/rooms/{roomname}/categories/{category_id}/cards", card.PostCardHandler).Methods("POST")
 
 	category := controller.NewCategory(db)

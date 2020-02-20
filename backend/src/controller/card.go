@@ -24,7 +24,7 @@ func NewCard(db *sqlx.DB) *Card {
 	}
 }
 
-func (c *Card) GetCardByRoomNameHandler(w http.ResponseWriter, r *http.Request) {
+func (c *Card) GetCardsByRoomNameHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	roomname := vars["roomname"]
 
