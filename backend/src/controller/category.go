@@ -20,16 +20,23 @@ func NewCategory(db *sqlx.DB) *Category {
 	}
 }
 
-func (c *Category) GetCategoryByRoomIDHandler(w http.ResponseWriter, r *http.Request) {
+func (c *Category) GetCategoriesByRoomNameHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	roomname := vars["roomname"]
 
 	room, err := repository.GetRoomByName(c.db, roomname)
-	if err != nil{
-		fmt.Println("could not get room", err)
+	if err != nil {
+		fmt.Println(err)
+		w.WriteHeader(http.StatusBadRequest)
+		return
 	}
 
-	cards, _ := repository.GetCategoriesByRoomID(c.db, room.ID)
+	cards, err := repository.GetCategoriesByRoomID(c.db, room.ID)
+	if err != nil {
+		fmt.Println(err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
 
 	res, _ := json.Marshal(cards)
 
