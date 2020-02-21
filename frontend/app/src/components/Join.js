@@ -16,12 +16,12 @@ class Join extends Component{
 
     handlechangenew = (e) => {
         switch(e.target.id){
-            case 'roomname':
+            case 'roomname_new':
                 this.setState({
                     room_id_new: e.target.value,
                 })
                 break
-            case 'password':
+            case 'password_new':
                 this.setState({
                     password_new: e.target.value,
                 })
@@ -58,17 +58,18 @@ class Join extends Component{
 
     handlechangejoin = (e) => {
         switch(e.target.id){
-            case 'roomname':
+            case 'roomname_join':
                 this.setState({
                     room_id_join: e.target.value,
                 })
+			console.log(this.state.room_id_join)
                 break
-            case 'password':
+            case 'password_join':
                 this.setState({
                     password_join: e.target.value,
                 })
                 break
-	    default :
+		default :
 			break
         }
     }
@@ -81,6 +82,7 @@ class Join extends Component{
 
     handleclickjoin = (e) => {
         const url = `/rooms/${this.state.room_id_join}`;
+	console.log(url)
         fetch(url, {
             method:"POST",
             headers: {
