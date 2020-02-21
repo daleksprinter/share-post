@@ -2,6 +2,7 @@ package controller
 
 import (
 	"fmt"
+	"github.com/daleksprinter/share-post/auth"
 	"github.com/daleksprinter/share-post/model"
 	"github.com/daleksprinter/share-post/repository"
 	"github.com/daleksprinter/share-post/websocket"
@@ -41,7 +42,7 @@ func (rc *RoomController) CreateRoomHandler(w http.ResponseWriter, r *http.Reque
 	var room model.Room
 	json.NewDecoder(r.Body).Decode(&room)
 
-	user, err := repository.GetUserFromSession(rc.db, r)
+	user, err := auth.GetRequestedUser(rc.db, r)
 	if err != nil {
 		fmt.Println(err)
 		w.WriteHeader(http.StatusUnauthorized)

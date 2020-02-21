@@ -6,9 +6,9 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/daleksprinter/share-post/auth"
 	"github.com/daleksprinter/share-post/model"
 	"github.com/daleksprinter/share-post/repository"
-
 	"github.com/daleksprinter/share-post/websocket"
 	"github.com/gorilla/mux"
 	"github.com/jmoiron/sqlx"
@@ -47,7 +47,7 @@ func (c *Card) PostCardHandler(w http.ResponseWriter, r *http.Request) {
 	room, _ := repository.GetRoomByName(c.db, roomname)
 	categoryID, _ := strconv.Atoi(category)
 
-	user, err := repository.GetUserFromSession(c.db, r)
+	user, err := auth.GetRequestedUser(c.db, r)
 	if err != nil {
 		fmt.Println(err)
 		return

@@ -10,14 +10,19 @@ class NavBar extends Component{
     }
 
     componentDidMount(){
-        const url = `/isloggedin`
+        const url = `/auth`
         fetch(url).then(res => {
-            return res.text()
-        }).then(txt => {
+		if(!res.ok){
+			throw Error(res.statusText)
+		}
+            return res.json()
+        }).then(json => {
             this.setState({
-                username: txt
+                username: json.nickname
             })
-        })
+	}).catch(txt => {
+		console.log(txt)
+	})
     }
 
     handleclick = (e) => {

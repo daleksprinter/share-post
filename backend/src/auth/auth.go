@@ -1,6 +1,8 @@
 package auth
 
 import (
+	"github.com/daleksprinter/share-post/model"
+	"github.com/daleksprinter/share-post/repository"
 	"github.com/daleksprinter/share-post/session"
 	"golang.org/x/oauth2"
 
@@ -10,6 +12,7 @@ import (
 	"net/http"
 
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
 	//	"google.golang.org/api/plus/v1"
 	oauthapi "google.golang.org/api/oauth2/v2"
 )
@@ -68,42 +71,26 @@ func OAuthCallbackHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("err:", err)
 	} else {
 		fmt.Println(ui.Email)
-		SaveUserToSession(w, r, *ui)
+		session.SaveEmailToSession(w, r, *ui)
 	}
 
 	http.Redirect(w, r, "http://localhost:3000/", http.StatusFound)
 }
 
-func SaveUserToSession(w http.ResponseWriter, r *http.Request, data oauthapi.Userinfoplus) error {
-	sess, err := session.Store.New(r, session.SessionName)
-	if err != nil {
-		fmt.Println("could not get session")
-		return err
-	}
-	sess.Values["userinfoemail"] = data.Email
-	if err := sess.Save(r, w); err != nil {
-		fmt.Println("could not save session")
-		return err
-	}
-	fmt.Println(sess.Values["userinfoemail"])
-
-	return nil
-}
-
-func GetUserFromSession(r *http.Request) (string, error) {
-	sess, err := session.Store.Get(r, session.SessionName)
+func GetRequestedUser(db *sqlx.DB, r *http.Request) (model.User, error) {
+	email, err := session.GetEmailFromSession(r)
 
 	if err != nil {
-		fmt.Println("could not get session")
-		return "", err
+		fmt.Println(err)
+		return model.User{}, err
 	}
 
-	user, ok := sess.Values["userinfoemail"].(string)
-	if !ok {
-		fmt.Println("could not get user data from session")
-		return "", err
+	user, err := repository.GetUserByEmail(db, email)
+
+	if err != nil {
+		fmt.Println(err)
+		return model.User{}, err
 	}
 
 	return user, nil
-
 }

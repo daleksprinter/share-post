@@ -37,21 +37,8 @@ func NewDB() (*sqlx.DB, error) {
 	return db, nil
 }
 
-func Index(w http.ResponseWriter, r *http.Request) {
-
-	user, err := auth.GetUserFromSession(r)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-
-	fmt.Fprintf(w, user)
-
-}
-
 func NewRouter(db *sqlx.DB) *mux.Router {
 	r := mux.NewRouter()
-	r.HandleFunc("/", Index)
 	r.HandleFunc("/login", auth.LoginHandler)
 	r.HandleFunc("/oauth2callback", auth.OAuthCallbackHandler)
 
@@ -67,7 +54,8 @@ func NewRouter(db *sqlx.DB) *mux.Router {
 	r.HandleFunc("/rooms/{roomname}", room.JoinRoomHandler).Methods("POST")
 	r.HandleFunc("/rooms", room.CreateRoomHandler).Methods("POST")
 
-	r.HandleFunc("/isloggedin", controller.IsLoggedIn).Methods("GET")
+	authen := controller.NewAuth(db)
+	r.HandleFunc("/auth", authen.Authenticate).Methods("GET")
 
 	return r
 }
