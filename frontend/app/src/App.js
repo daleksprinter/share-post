@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import Room from "./containers/Room";
 import {DndProvider} from 'react-dnd';
 import Backend from 'react-dnd-html5-backend';
@@ -10,7 +10,6 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 
 const App = () => {
-  console.log(process.env.REACT_APP_BACKEND_HOST)
   return (
     <DndProvider backend = {Backend}>
       <Router>

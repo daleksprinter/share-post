@@ -1,10 +1,8 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {ItemTypes} from '../dnd/types'
 import {useDrag} from 'react-dnd'
 import ItemCard from '@material-ui/core/Card';
 import { makeStyles } from '@material-ui/core/styles';
-import CardContent from '@material-ui/core/CardContent';
-import { mergeClasses } from '@material-ui/styles';
 
 const useStyles = makeStyles({
     card: {

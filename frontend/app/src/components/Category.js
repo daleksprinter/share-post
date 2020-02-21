@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import Card from './Card'
 import { ItemTypes } from '../dnd/types';
 import {useDrop} from 'react-dnd';
@@ -46,7 +46,7 @@ function Category(props){
             <div>{props.data.Title}</div>
             {props.category.cards.map(card => {
                 return (
-                    props.data.id == card.category_id ? <Card data = {card} /> : ''
+                    props.data.id === card.category_id ? <Card data = {card} /> : ''
                 )
             })}
             {isOver && (

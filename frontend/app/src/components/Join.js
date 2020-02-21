@@ -26,6 +26,8 @@ class Join extends Component{
                     password_new: e.target.value,
                 })
                 break
+	    default :
+		break
         }
     }
 
@@ -66,6 +68,8 @@ class Join extends Component{
                     password_join: e.target.value,
                 })
                 break
+	    default :
+			break
         }
     }
 
@@ -103,14 +107,14 @@ class Join extends Component{
                 <div>this is home page</div>
 
                 <div>new room</div>
-                <input type = "text" onChange = {this.handlechangenew} placeholder = 'room name' id = "roomname"></input>
+                <input type = "text" onChange = {this.handlechangenew} placeholder = 'room name' id = "roomname_new"></input>
                 <input type = "checkbox" onChange = {this.handlecheck} checked = {this.state.isprivate}></input>
-                {this.state.isprivate ? <input type = 'password' onChange = {this.handlechangenew} placeholder = 'password' id = "password"></input> : <span />}
+                {this.state.isprivate ? <input type = 'password' onChange = {this.handlechangenew} placeholder = 'password' id = "password_new"></input> : <span />}
                 <button type = "button" onClick = {this.handleclicknew}>create</button>
 
                 <div>join room</div>
-                <input type = "text" onChange = {this.handlechangejoin} placeholder = 'room name' id = "roomname"></input>
-                <input type = 'password' onChange = {this.handlechangejoin} placeholder = 'password' id = "password"></input>
+                <input type = "text" onChange = {this.handlechangejoin} placeholder = 'room name' id = "roomname_join"></input>
+                <input type = 'password' onChange = {this.handlechangejoin} placeholder = 'password' id = "password_join"></input>
                 <button type = "button" onClick = {this.handleclickjoin}>join</button>
             </div>
         )

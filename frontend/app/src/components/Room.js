@@ -5,10 +5,6 @@ import InputTxt from '../containers/InputTxt'
 
 class Room extends Component{
 
-    constructor(props){
-        super(props)
-    }
-
     componentDidMount(){
         const {params} = this.props.match
         const room_id = params.id

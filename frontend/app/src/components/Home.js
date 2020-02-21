@@ -2,9 +2,6 @@ import React, {Component} from 'react';
 import { withRouter } from 'react-router';
 
 class Home extends Component{
-    constructor(){
-        super();
-    }
 
     handleclick = (e) => {
         this.props.history.push(`/join`)

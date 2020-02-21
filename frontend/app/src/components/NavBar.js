@@ -33,8 +33,7 @@ class NavBar extends Component{
         return(
             <span>
                 <button onClick = {this.handleclick}>Share-Pos</button>
-                <span>this is navbar</span>
-                <span>{this.state.username == "" ? <span>please login</span> : <span>{this.state.username}</span>}</span>                
+                <span>{this.state.username === "" ? <span>please login</span> : <span>{this.state.username}</span>}</span>                
             </span>
         )
     }
