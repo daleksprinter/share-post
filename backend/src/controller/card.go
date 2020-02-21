@@ -14,6 +14,29 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
+type RespCard struct {
+	Content         string `json:"content"`
+	CreatedUserName string `json:"created_user_name"`
+	ColorCode       string `json:"color_code"`
+	CategoryID      int    `json:"category_id"`
+}
+
+func makeCard(db *sqlx.DB, c model.Card) (RespCard, error) {
+	user, err := repository.GetUserByID(db, c.CreatedUser)
+	if err != nil {
+		fmt.Println(err)
+		return RespCard{}, err
+	}
+
+	resp := RespCard{
+		Content:         c.Content,
+		CreatedUserName: user.Nickname,
+		ColorCode:       c.ColorCode,
+		CategoryID:      c.CategoryID,
+	}
+	return resp, nil
+}
+
 type Card struct {
 	db *sqlx.DB
 }
@@ -32,7 +55,18 @@ func (c *Card) GetCardsByRoomNameHandler(w http.ResponseWriter, r *http.Request)
 
 	cards, _ := repository.GetCardByRoomID(c.db, room.ID)
 
-	res, _ := json.Marshal(cards)
+	respCards := []RespCard{}
+	for _, card := range cards {
+		c, err := makeCard(c.db, card)
+		if err != nil {
+			fmt.Println(err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+		respCards = append(respCards, c)
+	}
+
+	res, _ := json.Marshal(respCards)
 
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(res)

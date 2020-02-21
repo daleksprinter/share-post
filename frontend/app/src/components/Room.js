@@ -32,6 +32,7 @@ class Room extends Component{
         fetch(cards_url).then(res => {
             return res.json()
         }).then(json => {
+		console.log(json)
 		this.props.setCards(json)
         })
     }

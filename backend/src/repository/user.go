@@ -18,3 +18,14 @@ func GetUserByEmail(db *sqlx.DB, email string) (model.User, error) {
 
 	return user, nil
 }
+
+func GetUserByID(db *sqlx.DB, id int) (model.User, error) {
+	user := model.User{}
+	query := `select * from user where id = ?`
+	err := db.Get(&user, query, id)
+	if err != nil {
+		fmt.Println(err)
+		return user, err
+	}
+	return user, nil
+}

@@ -62,7 +62,6 @@ class Join extends Component{
                 this.setState({
                     room_id_join: e.target.value,
                 })
-			console.log(this.state.room_id_join)
                 break
             case 'password_join':
                 this.setState({
@@ -82,7 +81,6 @@ class Join extends Component{
 
     handleclickjoin = (e) => {
         const url = `/rooms/${this.state.room_id_join}`;
-	console.log(url)
         fetch(url, {
             method:"POST",
             headers: {

@@ -18,7 +18,7 @@ function Card(props){
     return(
         <ItemCard className = {classes.card}>
             <CardContent>
-                <div>{props.data.id} {props.data.content}</div>
+                <div>{props.data.created_user_name} {props.data.content}</div>
             </CardContent>
         </ItemCard>
     )
