@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import { withRouter } from 'react-router';
 
 function NewRoom(props){
 	const [room_name_new, set_room_name_new] = useState("")

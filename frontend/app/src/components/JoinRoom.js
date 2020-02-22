@@ -1,7 +1,26 @@
 import React, {useState} from 'react';
-import { withRouter } from 'react-router';
+
+import { makeStyles } from '@material-ui/core/styles';
+import CardContent from '@material-ui/core/CardContent';
+
+import ItemCard from '@material-ui/core/Card';
+
+const useStyles = makeStyles({
+	card: {
+		minWidth: 275,
+		margin:"4px",
+		width:"7%",
+		height:"200px",
+		display:"inline-block",
+		textAlign: "center",
+	},
+});
+
 
 function JoinRoom(props){
+
+	const classes = useStyles();
+
 	const [room_name_join, set_room_name_join] = useState("")
 	const [room_password_join, set_room_password_join] = useState("")
 
@@ -41,12 +60,16 @@ function JoinRoom(props){
 	}
 
 	return(
-		<div>
-			<div>join room</div>
-			<input type = "text" onChange = {handlechangejoin} placeholder = 'room name' id = "roomname_join"></input>
-			<input type = 'password' onChange = {handlechangejoin} placeholder = 'password' id = "password_join"></input>
+		<ItemCard className={classes.card}>
+			<div>ルームに入る</div>
+			<div>
+				<input type = "text" onChange = {handlechangejoin} placeholder = 'room name' id = "roomname_join"></input>
+			</div>
+			<div>
+				<input type = 'password' onChange = {handlechangejoin} placeholder = 'password' id = "password_join"></input>
+			</div>
 			<button type = "button" onClick = {handleclickjoin}>join</button>
-		</div>
+		</ItemCard>
 
 	)
 
