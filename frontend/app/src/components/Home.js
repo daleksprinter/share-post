@@ -10,8 +10,6 @@ class Home extends Component{
     render(){
         return(
             <div>
-                <div>this is home page</div>
-                <button type = "button" onClick = {this.handleclick}>はじめる</button>
             </div>
         )
     }

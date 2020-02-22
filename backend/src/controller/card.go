@@ -91,6 +91,7 @@ func (c *Card) PostCardHandler(w http.ResponseWriter, r *http.Request) {
 	err = repository.PostCard(c.db, ca)
 	if err != nil {
 		fmt.Println(err)
+		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 

@@ -21,7 +21,11 @@ function Category(props){
 				content: txt
 			})
 		}).then(res => {
-			console.log("post succeed")
+			if(!res.ok){
+				throw Error(res.statusText)
+			}
+		}).catch(txt => {
+			console.log(txt)
 		})
 	}
 
