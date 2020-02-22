@@ -1,42 +1,66 @@
-import React, {Component} from 'react';
+import React, {useState, useEffect} from 'react';
 import { withRouter } from 'react-router';
 
-class NavBar extends Component{
-    constructor(){
-        super();
-        this.state = {
-            username: "",
-        }
-    }
+import { makeStyles  } from '@material-ui/core/styles';
 
-    componentDidMount(){
-        const url = `/auth`
-        fetch(url).then(res => {
-		if(!res.ok){
-			throw Error(res.statusText)
-		}
-            return res.json()
-        }).then(json => {
-            this.setState({
-                username: json.nickname
-            })
-	}).catch(txt => {
-		console.log(txt)
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+
+
+
+function NavBar(props){
+	const [username, setUsername] = useState("")
+
+	useEffect(() => {
+		const url = `/auth`
+		fetch(url).then(res => {
+			if(!res.ok){
+				throw Error(res.statusText)
+			}
+			return res.json()
+		}).then(json => {
+			setUsername(json.nickname)
+		}).catch(txt => {
+			console.log(txt)
+		})
+
 	})
-    }
 
-    handleclick = (e) => {
-        this.props.history.push(`/`)
-    }
+	let handleclick = (e) => {
+		this.props.history.push(`/`)
+	}
 
-    render(){
-        return(
-            <span>
-                <button onClick = {this.handleclick}>Share-Pos</button>
-                <span>{this.state.username === "" ? <span>please login</span> : <span>{this.state.username}</span>}</span>                
-            </span>
-        )
-    }
+	const useStyles = makeStyles(theme => ({
+		root: {
+			flexGrow: 1,
+		},
+		menuButton: {
+			marginRight: theme.spacing(2),
+		},
+		title: {
+			flexGrow: 1,
+		},
+	}));
+
+	const classes = useStyles();
+
+	return(
+		<div>
+			<div className={classes.root}>
+				<AppBar position="static">
+					<Toolbar>
+						<Typography variant="h6" className={classes.title}>
+							Share-Post
+						</Typography>
+						<Typography color="inherit">
+							<span>{username === "" ? <span>please login</span> : <span>{username}</span>}</span>                
+						</Typography>
+					</Toolbar>
+				</AppBar>
+			</div>
+		</div>
+	)
 }
 
 export default withRouter(NavBar);
