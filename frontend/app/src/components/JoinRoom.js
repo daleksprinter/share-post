@@ -2,9 +2,10 @@ import React, {useState} from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import CardContent from '@material-ui/core/CardContent';
-
 import ItemCard from '@material-ui/core/Card';
-
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 const useStyles = makeStyles({
 	card: {
 		minWidth: 275,
@@ -61,14 +62,14 @@ function JoinRoom(props){
 
 	return(
 		<ItemCard className={classes.card}>
-			<div>ルームに入る</div>
+			<Typography variant="body2" >ルームに入る</Typography>
 			<div>
-				<input type = "text" onChange = {handlechangejoin} placeholder = 'room name' id = "roomname_join"></input>
+				<TextField type = "text" onChange = {handlechangejoin} placeholder = 'room name' id = "roomname_join" variant="outlined"></TextField>
 			</div>
 			<div>
-				<input type = 'password' onChange = {handlechangejoin} placeholder = 'password' id = "password_join"></input>
+				<TextField type = 'password' onChange = {handlechangejoin} placeholder = 'password' id = "password_join" variant="outlined"></TextField>
 			</div>
-			<button type = "button" onClick = {handleclickjoin}>join</button>
+			<Button type = "button" onClick = {handleclickjoin} variant="contained" color="primary">join</Button>
 		</ItemCard>
 
 	)
