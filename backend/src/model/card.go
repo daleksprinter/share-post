@@ -9,3 +9,9 @@ type Card struct {
 	CreatedUser int    `db:"created_user" json:"created_user"`
 }
 
+type RespCard struct {
+	Content         string `json:"content"`
+	CreatedUserName string `json:"created_user_name"`
+	ColorCode       string `json:"color_code"`
+	CategoryID      int    `json:"category_id"`
+}

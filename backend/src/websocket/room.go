@@ -6,7 +6,7 @@ import (
 
 type Room struct {
 	Name       string
-	Forward    chan *model.Card
+	Forward    chan *model.RespCard
 	Register   chan *Client
 	Unregister chan *Client
 	Clients    map[*Client]bool
@@ -17,7 +17,7 @@ var Rooms = make(map[string]Room)
 func NewRoom(name string) *Room {
 	return &Room{
 		Name:       name,
-		Forward:    make(chan *model.Card),
+		Forward:    make(chan *model.RespCard),
 		Register:   make(chan *Client),
 		Unregister: make(chan *Client),
 		Clients:    make(map[*Client]bool),

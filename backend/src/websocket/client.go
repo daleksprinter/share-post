@@ -12,7 +12,7 @@ import (
 type Client struct {
 	Room *Room
 	Conn *websocket.Conn
-	Send chan *model.Card
+	Send chan *model.RespCard
 }
 
 var Clients = make(map[string]Client)
@@ -29,7 +29,7 @@ func NewClient(room *Room, w http.ResponseWriter, r *http.Request) Client {
 		return Client{}
 	}
 
-	client := &Client{Room: room, Conn: conn, Send: make(chan *model.Card)}
+	client := &Client{Room: room, Conn: conn, Send: make(chan *model.RespCard)}
 	client.Room.Register <- client
 
 	if err != nil {

@@ -9,11 +9,10 @@ class Room extends Component{
         const {params} = this.props.match
         const room_id = params.id
         const p = this.props
-
-        const ws = new WebSocket(`ws://${process.env.REACT_APP_BACKEND_HOST}/ws/${room_id}`);
+	const ws_url = `ws://${process.env.REACT_APP_BACKEND_HOST}/ws/${room_id}`
+        const ws = new WebSocket(ws_url);
         ws.addEventListener('message', function(e){
             const data = JSON.parse(e.data)
-            data.id = "New"
             p.addCard(data)
         })
 
@@ -32,7 +31,6 @@ class Room extends Component{
         fetch(cards_url).then(res => {
             return res.json()
         }).then(json => {
-		console.log(json)
 		this.props.setCards(json)
         })
     }

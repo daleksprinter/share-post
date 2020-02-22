@@ -41,7 +41,6 @@ function InputTxt(props) {
 
     const handlechange = (e) => {
         props.editInput(props.id, e.target.value);
-        console.log(props.inputs.inputs)
     }
     const classes = useStyles();
     return(

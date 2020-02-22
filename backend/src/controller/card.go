@@ -14,21 +14,14 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-type RespCard struct {
-	Content         string `json:"content"`
-	CreatedUserName string `json:"created_user_name"`
-	ColorCode       string `json:"color_code"`
-	CategoryID      int    `json:"category_id"`
-}
-
-func makeCard(db *sqlx.DB, c model.Card) (RespCard, error) {
+func makeCard(db *sqlx.DB, c model.Card) (model.RespCard, error) {
 	user, err := repository.GetUserByID(db, c.CreatedUser)
 	if err != nil {
 		fmt.Println(err)
-		return RespCard{}, err
+		return model.RespCard{}, err
 	}
 
-	resp := RespCard{
+	resp := model.RespCard{
 		Content:         c.Content,
 		CreatedUserName: user.Nickname,
 		ColorCode:       c.ColorCode,
@@ -55,7 +48,7 @@ func (c *Card) GetCardsByRoomNameHandler(w http.ResponseWriter, r *http.Request)
 
 	cards, _ := repository.GetCardByRoomID(c.db, room.ID)
 
-	respCards := []RespCard{}
+	respCards := []model.RespCard{}
 	for _, card := range cards {
 		c, err := makeCard(c.db, card)
 		if err != nil {
@@ -101,9 +94,15 @@ func (c *Card) PostCardHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	websocket.Rooms[roomname].Forward <- &ca
+	resp := model.RespCard{}
+	resp, err = makeCard(c.db, ca)
+	if err != nil {
+		fmt.Println(err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
 
-	w.Header().Set("Content-Type", "application/json")
-	fmt.Fprintf(w, "suc")
+	websocket.Rooms[roomname].Forward <- &resp
 
+	w.WriteHeader(http.StatusCreated)
 }
