@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { withRouter } from 'react-router';
-
+import JoinRoom from './JoinRoom'
 class Join extends Component{
     constructor(){
         super();
@@ -9,8 +9,6 @@ class Join extends Component{
             password_new: "",
             isprivate: true,
 
-            room_id_join: "",
-            password_join: "",
         }
     }
 
@@ -56,22 +54,6 @@ class Join extends Component{
 	})
     }
 
-    handlechangejoin = (e) => {
-        switch(e.target.id){
-            case 'roomname_join':
-                this.setState({
-                    room_id_join: e.target.value,
-                })
-                break
-            case 'password_join':
-                this.setState({
-                    password_join: e.target.value,
-                })
-                break
-		default :
-			break
-        }
-    }
 
     handlecheck = (e) => {
         this.setState({
@@ -79,29 +61,10 @@ class Join extends Component{
         })
     }
 
-    handleclickjoin = (e) => {
-        const url = `/rooms/${this.state.room_id_join}`;
-        fetch(url, {
-            method:"POST",
-            headers: {
-                "Content-Type": "application/json; charset=utf-8",
-            },
-            body: JSON.stringify({
-                hashed_password: this.state.password_join,
-            })
-        }).then((res) => {
-		if(!res.ok) {
-			throw Error(res.statusText);
-		}
-            return res.text()
-        }).then((txt) => {
-                this.props.history.push(`/rooms/${this.state.room_id_join}`)
-	}).catch(txt => {
-		console.log(txt)
-	})
-    }
+    
 
     render(){
+	console.log(this.props)
         return(
             <div>
                 <div>this is home page</div>
@@ -112,12 +75,9 @@ class Join extends Component{
                 {this.state.isprivate ? <input type = 'password' onChange = {this.handlechangenew} placeholder = 'password' id = "password_new"></input> : <span />}
                 <button type = "button" onClick = {this.handleclicknew}>create</button>
 
-                <div>join room</div>
-                <input type = "text" onChange = {this.handlechangejoin} placeholder = 'room name' id = "roomname_join"></input>
-                <input type = 'password' onChange = {this.handlechangejoin} placeholder = 'password' id = "password_join"></input>
-                <button type = "button" onClick = {this.handleclickjoin}>join</button>
-            </div>
-        )
+		<JoinRoom history={this.props.history}/>
+	    </div>
+       )
     }
 }
 
