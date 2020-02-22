@@ -10,8 +10,8 @@ const useStyles = makeStyles({
 	card: {
 		minWidth: 275,
 		margin:"4px",
-		width:"7%",
-		height:"200px",
+		width:"30%",
+		height:"300px",
 		display:"inline-block",
 		textAlign: "center",
 	},
@@ -64,10 +64,10 @@ function JoinRoom(props){
 		<ItemCard className={classes.card}>
 			<Typography variant="body2" >ルームに入る</Typography>
 			<div>
-				<TextField type = "text" onChange = {handlechangejoin} placeholder = 'room name' id = "roomname_join" variant="outlined"></TextField>
+				<TextField type = "text" onChange = {handlechangejoin} placeholder = 'Room ID' id = "roomname_join" variant="outlined"></TextField>
 			</div>
 			<div>
-				<TextField type = 'password' onChange = {handlechangejoin} placeholder = 'password' id = "password_join" variant="outlined"></TextField>
+				<TextField type = 'password' onChange = {handlechangejoin} placeholder = 'Password' id = "password_join" variant="outlined"></TextField>
 			</div>
 			<Button type = "button" onClick = {handleclickjoin} variant="contained" color="primary">join</Button>
 		</ItemCard>
