@@ -3,6 +3,7 @@ import Card from './Card'
 import { ItemTypes } from '../dnd/types';
 import {useDrop} from 'react-dnd';
 
+import Typography from '@material-ui/core/Typography';
 
 function Category(props){
 	const [open, set_open] = useState(true)
@@ -40,12 +41,15 @@ function Category(props){
 			ref = {drop}
 			style={{
 				position: 'relative',
-				width: '100%',
+				width: '70%',
 				height: '100%',
+				backgroundColor: '#EEEEEE',
+				margin: "5px",
+				padding: "10px",
 			}}
 			onClick = {handleclick}
 		>
-			<div>{props.data.Title}</div>
+			<Typography variant = 'body2'>{props.data.Title}</Typography>
 			
 			{open ? <div>
 				{props.category.cards.map(card => {
