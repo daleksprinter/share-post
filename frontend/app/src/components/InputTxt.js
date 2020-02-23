@@ -9,11 +9,13 @@ import { useDispatch  } from "react-redux";
 const useStyles = makeStyles({
 	card: {
 		minWidth: 275,
-		margin:"4px",
 		width:"7%",
 		height:"200px",
-		display:"inline-block",
 	},
+	root: {
+		display: 'inline-block',
+	}
+	
 });
 
 
@@ -45,6 +47,7 @@ function InputTxt(props) {
 				cursor: 'move',
 
 			}}
+			className = {classes.root}
 		>   
 			<ItemCard className={classes.card}>
 				<textarea onChange = {handlechange} placeholder = "input your idea">{props.txt}</textarea>

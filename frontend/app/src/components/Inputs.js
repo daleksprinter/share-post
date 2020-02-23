@@ -6,11 +6,17 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
 	root: {
-		backgroundColor: 'black',
 		position: 'fixed',
-		left: '50%',
-		top: '80%',
+		bottom: '0',
+		left: '0',
+		width: '100%',
+		textAlign: 'center',
 	},
+	container: {
+		backgroundColor: 'gray',
+		display: 'inline-block',
+		padding: '30px',
+	}
 })
 
 const inputselector = (state) => state.inputs
@@ -25,12 +31,14 @@ function Inputs(props) {
 	const classes = useStyles()
 	return(
 		<div className = {classes.root}>
-			{inputs.inputs.map((e, i) => {
-				return(
-					<InputTxt id = {i} txt = {e} />
-				)
-			})}
-			<button onClick={handleclick}>addarea</button>
+			<div className = {classes.container}>
+				{inputs.inputs.map((e, i) => {
+					return(
+						<InputTxt id = {i} txt = {e} />
+					)
+				})}
+				<button onClick={handleclick}>addarea</button>
+			</div>
 		</div>
 	)
 }
