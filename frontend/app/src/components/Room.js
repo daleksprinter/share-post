@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import Category from '../containers/Category'
-import InputTxt from '../containers/InputTxt'
-
+import Inputs from './Inputs' 
 
 class Room extends Component{
 
@@ -16,6 +15,9 @@ class Room extends Component{
             p.addCard(data)
         })
 
+	    ws.onopen = (e) => {
+		console.log("new connection")
+	    }
 
         //get categories
         const category_url = `/rooms/${room_id}/categories`
@@ -34,11 +36,6 @@ class Room extends Component{
 		this.props.setCards(json)
         })
     }
-
-    handleClick = () => {
-        this.props.addInput()
-    }
-
     render(){
         return(
             <div>
@@ -51,14 +48,7 @@ class Room extends Component{
                         )
                     })}
                 </div>
-                <div>
-                    {this.props.inputs.inputs.map((txt, ind) => {
-                        return (
-                            <InputTxt id = {ind} txt = {txt}></InputTxt>
-                        )
-                    })}
-                </div>
-                <button onClick = {this.handleClick}>add_card</button>
+		<Inputs />
 
             </div>
         )

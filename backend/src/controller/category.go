@@ -23,7 +23,6 @@ func NewCategory(db *sqlx.DB) *Category {
 func (c *Category) GetCategoriesByRoomNameHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	roomname := vars["roomname"]
-	fmt.Println(roomname)
 
 	room, err := repository.GetRoomByName(c.db, roomname)
 	if err != nil {
