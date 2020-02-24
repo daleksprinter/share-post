@@ -33,7 +33,7 @@ function Room(props){
 			props.setCards(json);
 		})
 
-	})
+	}, [])
 
 	return(
 		<div>

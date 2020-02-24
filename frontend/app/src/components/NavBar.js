@@ -25,7 +25,7 @@ function NavBar(props){
 			console.log(txt)
 		})
 
-	})
+	}, [])
 
 	let handleclick = (e) => {
 		this.props.history.push(`/`)
