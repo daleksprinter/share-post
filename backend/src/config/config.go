@@ -16,7 +16,7 @@ func ConfigureOAuthClient() *oauth2.Config {
 		ClientID:     os.Getenv("GOOGLE_CLIENT_ID"),
 		ClientSecret: os.Getenv("GOOGLE_CLIENT_SECRET"),
 		RedirectURL:  redirectURL,
-		Scopes:       []string{"email", "profile"},
+		Scopes:       []string{"email"},
 		Endpoint:     google.Endpoint,
 	}
 }

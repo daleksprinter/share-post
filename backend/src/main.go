@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/daleksprinter/share-post/auth"
 	"github.com/daleksprinter/share-post/config"
 	"github.com/daleksprinter/share-post/controller"
 
@@ -39,8 +38,6 @@ func NewDB() (*sqlx.DB, error) {
 
 func NewRouter(db *sqlx.DB) *mux.Router {
 	r := mux.NewRouter()
-	r.HandleFunc("/login", auth.LoginHandler)
-	r.HandleFunc("/oauth2callback", auth.OAuthCallbackHandler)
 
 	card := controller.NewCard(db)
 	r.HandleFunc("/rooms/{roomname}/cards", card.GetCardsByRoomNameHandler).Methods("GET")
@@ -54,8 +51,10 @@ func NewRouter(db *sqlx.DB) *mux.Router {
 	r.HandleFunc("/rooms/{roomname}", room.JoinRoomHandler).Methods("POST")
 	r.HandleFunc("/rooms", room.CreateRoomHandler).Methods("POST")
 
-	authen := controller.NewAuth(db)
+	authen := controller.NewAuth(db, config.ConfigureOAuthClient())
 	r.HandleFunc("/auth", authen.Authenticate).Methods("GET")
+	r.HandleFunc("/login", authen.LoginHandler)
+	r.HandleFunc("/oauth2callback", authen.OAuthCallbackHandler)
 
 	return r
 }
@@ -86,7 +85,6 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	auth.OAuthConfig = config.ConfigureOAuthClient()
 	datasource := os.Getenv("DATASOURCE")
 	if datasource == "" {
 		datasource = ":8080"

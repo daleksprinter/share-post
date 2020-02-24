@@ -31,8 +31,8 @@ func GetUserByID(db *sqlx.DB, id int) (model.User, error) {
 }
 
 func AddUser(db *sqlx.DB, u model.User) error {
-	query := "insert into user (email, icon) values(?, ?)"
-	_, err := db.Query(query, u.Email, u.Icon)
+	query := "insert into user (email, nickname) values(?, ?)"
+	_, err := db.Query(query, u.Email, u.Nickname)
 	if err != nil {
 		fmt.Println(err)
 		return err
