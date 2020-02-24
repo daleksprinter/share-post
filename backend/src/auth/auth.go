@@ -66,7 +66,8 @@ func OAuthCallbackHandler(w http.ResponseWriter, r *http.Request) {
 	client := OAuthConfig.Client(context.Background(), tok)
 	svr, err := oauthapi.New(client)
 	ui, err := svr.Userinfo.Get().Do()
-	fmt.Println(ui)
+	fmt.Printf("(%%+v) %+v\n", ui)
+
 	if err != nil {
 		fmt.Println("err:", err)
 	} else {

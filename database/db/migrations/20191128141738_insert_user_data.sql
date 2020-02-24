@@ -1,6 +1,5 @@
-
 -- +goose Up
-insert into user(email, nickname) values("daleksprinter@gmail.com", "らぴお");
+insert into user(email, nickname) values("sprinter@gmail.com", "らぴお");
 
 
 -- +goose Down
