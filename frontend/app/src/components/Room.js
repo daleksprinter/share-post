@@ -3,7 +3,7 @@ import Category from '../containers/Category'
 import Inputs from './Inputs' 
 
 function Room(props){
-
+	
 	useEffect(() => {
 		let room_id = props.match.params.id
 		let ws_url = `ws://${process.env.REACT_APP_BACKEND_HOST}/ws/${room_id}`
