@@ -3,6 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { addArea } from '../actions/Input'
 import InputTxt from './InputTxt'
 import { makeStyles } from '@material-ui/core/styles';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+
+
 const useStyles = makeStyles({
 	root: {
 		position: 'fixed',
@@ -12,9 +16,18 @@ const useStyles = makeStyles({
 		textAlign: 'center',
 	},
 	container: {
-		backgroundColor: 'gray',
 		display: 'inline-block',
 		bottom: '0',
+		backgroundColor: 'silver',
+	},
+	inputs: {
+		display: 'inline-block',
+	},
+
+
+	button: {
+		display:'inline-block',
+		
 	}
 })
 
@@ -31,12 +44,19 @@ function Inputs(props) {
 	return(
 		<div className = {classes.root}>
 			<div className = {classes.container}>
-				{inputs.inputs.map((e, i) => {
-					return(
-						<InputTxt id = {i} txt = {e} />
-					)
-				})}
-				<button onClick={handleclick}>addarea</button>
+				<div className = {classes.inputs}>
+					{inputs.inputs.map((e, i) => {
+						return(
+							<InputTxt id = {i} txt = {e} />
+						)
+					})}
+				</div>
+				<div className = {classes.button}>
+					<Fab color="primary" aria-label="add" onClick = {handleclick} >
+						<AddIcon />
+					</Fab>
+				</div>
+
 			</div>
 		</div>
 	)
