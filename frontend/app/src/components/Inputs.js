@@ -27,7 +27,8 @@ const useStyles = makeStyles({
 
 	button: {
 		display:'inline-block',
-		
+		verticalAlign:'bottom',
+		margin: '0px 10px 10px 0px',
 	}
 })
 
