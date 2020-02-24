@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { addArea } from '../actions/Input'
 import InputTxt from './InputTxt'
 import { makeStyles } from '@material-ui/core/styles';
-
 const useStyles = makeStyles({
 	root: {
 		position: 'fixed',
@@ -15,7 +14,7 @@ const useStyles = makeStyles({
 	container: {
 		backgroundColor: 'gray',
 		display: 'inline-block',
-		padding: '30px',
+		bottom: '0',
 	}
 })
 

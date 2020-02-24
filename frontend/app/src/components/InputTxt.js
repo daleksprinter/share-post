@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {ItemTypes} from '../dnd/types'
 import {useDrag} from 'react-dnd'
 import ItemCard from '@material-ui/core/Card';
@@ -6,14 +6,21 @@ import { makeStyles } from '@material-ui/core/styles';
 import { editInput } from '../actions/Input'
 
 import { useDispatch  } from "react-redux";
+import TextField from '@material-ui/core/TextField';
 const useStyles = makeStyles({
 	card: {
 		minWidth: 275,
 		width:"7%",
 		height:"200px",
+		margin: '20px 20px 5px 20px',
 	},
 	root: {
 		display: 'inline-block',
+	},
+	input: {
+		width: '90%',
+		height: '90%',
+		top: '20px',
 	}
 	
 });
@@ -38,6 +45,7 @@ function InputTxt(props) {
 	}
 	const classes = useStyles();
 
+	const [isvisible, setisvisible] = useState(false)
 
 	return(
 		<div
@@ -49,9 +57,17 @@ function InputTxt(props) {
 			}}
 			className = {classes.root}
 		>   
-			<ItemCard className={classes.card}>
-				<textarea onChange = {handlechange} placeholder = "input your idea">{props.txt}</textarea>
-			</ItemCard>
+			<div>
+				<ItemCard className = {classes.card} >
+					<TextField
+						id="outlined-multiline-static"
+						multiline
+						rows="8"
+						onChange = {handlechange}
+						className = {classes.input}
+					/>
+				</ItemCard>
+			</div>
 		</div>
 	)
 }
