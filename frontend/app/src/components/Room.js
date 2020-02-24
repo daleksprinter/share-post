@@ -1,59 +1,55 @@
-import React, {Component} from 'react';
+import React, {useEffect} from 'react';
 import Category from '../containers/Category'
 import Inputs from './Inputs' 
 
-class Room extends Component{
+function Room(props){
 
-    componentDidMount(){
-        const {params} = this.props.match
-        const room_id = params.id
-        const p = this.props
-	const ws_url = `ws://${process.env.REACT_APP_BACKEND_HOST}/ws/${room_id}`
-        const ws = new WebSocket(ws_url);
-        ws.addEventListener('message', function(e){
-            const data = JSON.parse(e.data)
-            p.addCard(data)
-        })
+	useEffect(() => {
+		let room_id = props.match.params.id
+		let ws_url = `ws://${process.env.REACT_APP_BACKEND_HOST}/ws/${room_id}`
+		let ws = new WebSocket(ws_url);
+		ws.addEventListener('message', function(e){
+			let data = JSON.parse(e.data)
+			props.addCard(data);
+		});
 
-	    ws.onopen = (e) => {
-		console.log("new connection")
-	    }
+		let category_url = `/rooms/${room_id}/categories`
 
-        //get categories
-        const category_url = `/rooms/${room_id}/categories`
-        fetch(category_url).then(res => {
-            return res.json()
-        }).then(json => {
-		this.props.setCategories(json)
-        })
+		fetch(category_url).then(res => {
+			if(!res.ok){
+				throw Error(res.statusText)
+			}
+			return res.json();
+		}).then(json => {
+			props.setCategories(json);
+		}).catch((e) => {
+			console.log(e)
+		})
 
+		let cards_url = `/rooms/${room_id}/cards`;
+		fetch(cards_url).then(res => {
+			return res.json();
+		}).then(json => {
+			props.setCards(json);
+		})
 
-        //get cards
-        const cards_url = `/rooms/${room_id}/cards`
-        fetch(cards_url).then(res => {
-            return res.json()
-        }).then(json => {
-		this.props.setCards(json)
-        })
-    }
-    render(){
-        return(
-            <div>
-                <div>
-                    {this.props.room.categories.map(category => {
-                        return (
-                            <div>
-                                <Category data = {category} match = {this.props.match}/>
-                            </div>
-                        )
-                    })}
-                </div>
-		<Inputs />
+	})
 
-            </div>
-        )
-    }
+	return(
+		<div>
+			{props.room.categories.map(category => {
+				return (
+					<div>
+						<Category data = {category} match = {props.match}/>
+					</div>
+				)
+			})}
+			<Inputs />
+
+		</div>
+	)
 }
+
 
 export default Room;
 

@@ -46,19 +46,17 @@ function NavBar(props){
 	const classes = useStyles();
 
 	return(
-		<div>
-			<div className={classes.root}>
-				<AppBar position="static">
-					<Toolbar>
-						<Typography variant="h6" className={classes.title}>
-							Share-Post
-						</Typography>
-						<Typography color="inherit">
-							<span>{username === "" ? <span>please login</span> : <span>{username}</span>}</span>                
-						</Typography>
-					</Toolbar>
-				</AppBar>
-			</div>
+		<div className={classes.root}>
+			<AppBar position="static">
+				<Toolbar>
+					<Typography variant="h6" className={classes.title}>
+						Share-Post
+					</Typography>
+					<Typography color="inherit">
+						<span>{username === "" ? <span>please login</span> : <span>{username}</span>}</span>                
+					</Typography>
+				</Toolbar>
+			</AppBar>
 		</div>
 	)
 }
