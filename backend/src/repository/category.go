@@ -13,3 +13,12 @@ func GetCategoriesByRoomID(db *sqlx.DB, RoomID int) ([]model.Category, error) {
 	}
 	return categories, nil
 }
+
+func AddCategory(db *sqlx.DB, c model.Category) error {
+	query := "insert into category(title, created_user, room_id) values(?, ?, ?)"
+	_, err := db.Query(query, c.Title, c.CreatedUser, c.RoomID)
+	if err != nil {
+		return err
+	}
+	return nil
+}

@@ -77,6 +77,13 @@ func (c *Category) PostCategoryHandler(w http.ResponseWriter, r *http.Request) {
 		RoomID:      room.ID,
 	}
 
-	fmt.Printf("%+v/n", cat)
+	err = repository.AddCategory(c.db, cat)
+	if err != nil {
+		fmt.Println(err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusCreated)
 
 }

@@ -61,7 +61,6 @@ function Room(props){
 
 	const handleclick = () => {
 		let room_id = props.match.params.id
-		console.log(category_name)
 		let category_post_url = `/rooms/${room_id}/category`
 		fetch(category_post_url, {
 			method: "POST",
@@ -75,7 +74,9 @@ function Room(props){
 			if(!res.ok){
 				throw Error(res.statusText)
 			}
-		}).then(err => {
+		}).then(() => {
+			console.log('created')
+		}).catch(err => {
 			console.log(err)
 		})
 	}
