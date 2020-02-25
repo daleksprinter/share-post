@@ -45,6 +45,7 @@ func NewRouter(db *sqlx.DB) *mux.Router {
 
 	category := controller.NewCategory(db)
 	r.HandleFunc("/rooms/{roomname}/categories", category.GetCategoriesByRoomNameHandler).Methods("GET")
+	r.HandleFunc("/rooms/{roomname}/category", category.PostCategoryHandler).Methods("POST")
 
 	room := controller.NewRoom(db)
 	r.HandleFunc("/ws/{roomname}", room.ServeWs).Methods("GET")
