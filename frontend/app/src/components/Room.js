@@ -1,9 +1,24 @@
 import React, {useEffect} from 'react';
 import Category from '../containers/Category'
 import Inputs from './Inputs' 
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles({
+	root: {
+		position: 'relative',
+		width: '70%',
+		height: '100%',
+		backgroundColor: '#EEEEEE',
+		margin: "5px",
+		padding: "10px",
+	},
+})
+
+
 
 function Room(props){
 	
+	const classes = useStyles()
 	useEffect(() => {
 		let room_id = props.match.params.id
 		let ws_url = `ws://${process.env.REACT_APP_BACKEND_HOST}/ws/${room_id}`
@@ -37,11 +52,12 @@ function Room(props){
 
 	return(
 		<div>
+			<div className = {classes.root}>
+				addcategory
+			</div>
 			{props.room.categories.map(category => {
 				return (
-					<div>
-						<Category data = {category} match = {props.match}/>
-					</div>
+					<Category data = {category} match = {props.match}/>
 				)
 			})}
 			<Inputs />

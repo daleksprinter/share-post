@@ -18,7 +18,6 @@ function Join(props){
 
 	const [value, setValue] = useState(0)
 	const handlechange = (event, val) => {
-		console.log(event, val)
 		setValue(val)
 	}
 	return(
