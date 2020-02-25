@@ -2,7 +2,8 @@ import React, {useEffect} from 'react';
 import Category from '../containers/Category'
 import Inputs from './Inputs' 
 import { makeStyles } from '@material-ui/core/styles';
-
+import IconButton from '@material-ui/core/IconButton';
+import AddIcon from '@material-ui/icons/Add';
 const useStyles = makeStyles({
 	root: {
 		position: 'relative',
@@ -12,6 +13,9 @@ const useStyles = makeStyles({
 		margin: "5px",
 		padding: "10px",
 	},
+	button: {
+		marginLeft: '95%',
+	}
 })
 
 
@@ -50,11 +54,17 @@ function Room(props){
 
 	}, [])
 
+	const handleclick = () => {
+		console.log('clicked')
+	}
 	return(
 		<div>
 			<div className = {classes.root}>
-				addcategory
+				<IconButton onClick = {handleclick} className = {classes.button}>
+					<AddIcon />
+				</IconButton>
 			</div>
+
 			{props.room.categories.map(category => {
 				return (
 					<Category data = {category} match = {props.match}/>
