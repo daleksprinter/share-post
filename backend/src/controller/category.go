@@ -2,14 +2,14 @@ package controller
 
 import (
 	"encoding/json"
-	"net/http"
-
 	"fmt"
 	"github.com/daleksprinter/share-post/auth"
 	"github.com/daleksprinter/share-post/model"
 	"github.com/daleksprinter/share-post/repository"
 	"github.com/gorilla/mux"
 	"github.com/jmoiron/sqlx"
+	"net/http"
+	"strconv"
 )
 
 type Category struct {
@@ -50,10 +50,12 @@ func (c *Category) PostCategoryHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	roomName := vars["roomname"]
 
-	p := struct {
-		categoryName string `json:"category_name"`
-	}{}
-	json.NewDecoder(r.Body).Decode(&p)
+	//parse request body
+	length, err := strconv.Atoi(r.Header.Get("Content-Length"))
+	body := make([]byte, length)
+	length, err = r.Body.Read(body)
+	var jsonBody map[string]interface{}
+	json.Unmarshal(body[:length], &jsonBody)
 
 	usr, err := auth.GetRequestedUser(c.db, r)
 	if err != nil {
@@ -70,7 +72,7 @@ func (c *Category) PostCategoryHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	cat := model.Category{
-		Title:       p.categoryName,
+		Title:       jsonBody["cat"].(string),
 		CreatedUser: usr.ID,
 		RoomID:      room.ID,
 	}

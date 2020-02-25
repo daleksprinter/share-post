@@ -60,8 +60,26 @@ function Room(props){
 	}, [])
 
 	const handleclick = () => {
-		console.log('clicked')
+		let room_id = props.match.params.id
+		console.log(category_name)
+		let category_post_url = `/rooms/${room_id}/category`
+		fetch(category_post_url, {
+			method: "POST",
+			headers: {
+				'Content-type': 'application/json',
+			},
+			body: JSON.stringify({
+				cat: category_name,
+			})
+		}).then(res => {
+			if(!res.ok){
+				throw Error(res.statusText)
+			}
+		}).then(err => {
+			console.log(err)
+		})
 	}
+
 	const handlechange = (e) => {
 		set_category_name(e.target.value)
 	}
