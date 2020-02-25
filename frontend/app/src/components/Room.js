@@ -30,7 +30,6 @@ function Room(props){
 	const dispatch = useDispatch()	
 	const categoriesselector = (state) => state.room
 	const categories = useSelector(categoriesselector)
-	console.log(categories)
 
 	const [category_name, set_category_name] = useState("")
 	const classes = useStyles()
@@ -80,8 +79,9 @@ function Room(props){
 			if(!res.ok){
 				throw Error(res.statusText)
 			}
-		}).then(() => {
-			dispatch(addCategory())
+			return res.json()
+		}).then((json) => {
+			dispatch(addCategory(json))		
 		}).catch(err => {
 			console.log(err)
 		})
