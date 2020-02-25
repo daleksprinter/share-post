@@ -5,6 +5,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
 import TextField from '@material-ui/core/TextField';
+import { useDispatch, useSelector } from "react-redux";
+import { addCategory } from '../actions/Room';
 
 const useStyles = makeStyles({
 	root: {
@@ -25,7 +27,11 @@ const useStyles = makeStyles({
 
 
 function Room(props){
-	
+	const dispatch = useDispatch()	
+	const categoriesselector = (state) => state.room
+	const categories = useSelector(categoriesselector)
+	console.log(categories)
+
 	const [category_name, set_category_name] = useState("")
 	const classes = useStyles()
 	useEffect(() => {
@@ -75,7 +81,7 @@ function Room(props){
 				throw Error(res.statusText)
 			}
 		}).then(() => {
-			console.log('created')
+			dispatch(addCategory())
 		}).catch(err => {
 			console.log(err)
 		})

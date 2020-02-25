@@ -71,7 +71,6 @@ func (c *Card) PostCardHandler(w http.ResponseWriter, r *http.Request) {
 	roomname := vars["roomname"]
 	category := vars["category_id"]
 
-	fmt.Printf("%+v/n", r.Body)
 	room, _ := repository.GetRoomByName(c.db, roomname)
 	categoryID, _ := strconv.Atoi(category)
 
