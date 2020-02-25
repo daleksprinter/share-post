@@ -4,17 +4,21 @@ import Inputs from './Inputs'
 import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
+import TextField from '@material-ui/core/TextField';
+
 const useStyles = makeStyles({
 	root: {
-		position: 'relative',
 		width: '70%',
 		height: '100%',
 		backgroundColor: '#EEEEEE',
 		margin: "5px",
 		padding: "10px",
+		textAlign: 'right',
 	},
 	button: {
-		marginLeft: '95%',
+		margin: '5px',
+	},
+	input: {
 	}
 })
 
@@ -60,6 +64,7 @@ function Room(props){
 	return(
 		<div>
 			<div className = {classes.root}>
+				<TextField className = {classes.input} id="outlined-basic" label="Category Name" variant="outlined" />
 				<IconButton onClick = {handleclick} className = {classes.button}>
 					<AddIcon />
 				</IconButton>
