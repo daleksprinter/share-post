@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Category from '../containers/Category'
 import Inputs from './Inputs' 
 import { makeStyles } from '@material-ui/core/styles';
@@ -26,6 +26,7 @@ const useStyles = makeStyles({
 
 function Room(props){
 	
+	const [category_name, set_category_name] = useState("")
 	const classes = useStyles()
 	useEffect(() => {
 		let room_id = props.match.params.id
@@ -61,10 +62,13 @@ function Room(props){
 	const handleclick = () => {
 		console.log('clicked')
 	}
+	const handlechange = (e) => {
+		set_category_name(e.target.value)
+	}
 	return(
 		<div>
 			<div className = {classes.root}>
-				<TextField className = {classes.input} id="outlined-basic" label="Category Name" variant="outlined" />
+				<TextField className = {classes.input} id="outlined-basic" label="Category Name" variant="outlined" onChange = {handlechange}/>
 				<IconButton onClick = {handleclick} className = {classes.button}>
 					<AddIcon />
 				</IconButton>
