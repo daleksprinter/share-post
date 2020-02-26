@@ -21,8 +21,29 @@ const useStyles = makeStyles({
 		margin: '5px',
 	},
 	input: {
-	}
+	},
+	direct: {
+		position: "fixed",
+		zIndex: '100',
+		backgroundColor: 'rgba(0, 0, 0, 0.5)',
+		width: '70%',
+		height: '70%',
+		marginLeft:'15%'
+	},
 })
+
+
+function Direct(props){
+
+	const classes = useStyles()
+	return (
+		<div className = {classes.dirroot}>
+			<div className = {classes.direct}>
+				{props.data.content}
+			</div>
+		</div>
+	)
+}
 
 function Room(props){
 	const dispatch = useDispatch()	
@@ -31,6 +52,7 @@ function Room(props){
 
 	const [category_name, set_category_name] = useState("")
 
+	const classes = useStyles()
 	const [display, set_display] = useState(false)
 	const [recieved_card, set_recieved_data] = useState({})
 
@@ -40,7 +62,6 @@ function Room(props){
 		set_recieved_data(data)
 	}
 
-	const classes = useStyles()
 
 	useEffect(() => {
 		let room_id = props.match.params.id
@@ -100,9 +121,14 @@ function Room(props){
 	const handlechange = (e) => {
 		set_category_name(e.target.value)
 	}
+
+	const hidedirect = () => {
+		console.log('clicked')
+		set_display(false)
+	}
 	return(
 		<div>
-			{display && <div>{recieved_card.content}</div>}
+			{display && <Direct data = {recieved_card} onClick = {hidedirect}/> }
 			
 			<div className = {classes.root}>
 				<TextField className = {classes.input} id="outlined-basic" label="Category Name" variant="outlined" onChange = {handlechange}/>
