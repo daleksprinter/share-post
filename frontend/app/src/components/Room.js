@@ -11,6 +11,9 @@ import Card from '@material-ui/core/Card';
 
 import CardContent from '@material-ui/core/CardContent';
 const useStyles = makeStyles({
+	r:{
+		height: '100%',
+	},
 	root: {
 		width: '70%',
 		height: '100%',
@@ -38,7 +41,13 @@ const useStyles = makeStyles({
 		minWidth: 275,
 		width:"10%",
 		height:"250px",
+	},
+	disp: {
+		position: 'relative',
+		width: '100%',
+		height: '100%',
 	}
+	
 })
 
 
@@ -137,12 +146,11 @@ function Room(props){
 	}
 
 	const hidedirect = () => {
-		console.log('clicked')
 		set_display(false)
 	}
 	return(
-		<div>
-			{display && <Direct data = {recieved_card} onClick = {hidedirect}/> }
+		<div onClick = {hidedirect}>
+			{display && <Direct className = {classes.disp} data = {recieved_card}/> }
 			
 			<div className = {classes.root}>
 				<TextField className = {classes.input} id="outlined-basic" label="Category Name" variant="outlined" onChange = {handlechange}/>
