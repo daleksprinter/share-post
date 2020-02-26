@@ -24,21 +24,31 @@ const useStyles = makeStyles({
 	}
 })
 
-
-
 function Room(props){
 	const dispatch = useDispatch()	
 	const categoriesselector = (state) => state.room
 	const categories = useSelector(categoriesselector)
 
 	const [category_name, set_category_name] = useState("")
+
+	const [display, set_display] = useState(false)
+	const [recieved_card, set_recieved_data] = useState({})
+
+	const recieve = (data) => {
+		console.log(data)
+		set_display(true)
+		set_recieved_data(data)
+	}
+
 	const classes = useStyles()
+
 	useEffect(() => {
 		let room_id = props.match.params.id
 		let ws_url = `ws://${process.env.REACT_APP_BACKEND_HOST}/ws/${room_id}`
 		let ws = new WebSocket(ws_url);
 		ws.addEventListener('message', function(e){
 			let data = JSON.parse(e.data)
+			recieve(data)		
 			props.addCard(data);
 		});
 
@@ -92,6 +102,8 @@ function Room(props){
 	}
 	return(
 		<div>
+			{display && <div>{recieved_card.content}</div>}
+			
 			<div className = {classes.root}>
 				<TextField className = {classes.input} id="outlined-basic" label="Category Name" variant="outlined" onChange = {handlechange}/>
 				<IconButton onClick = {handleclick} className = {classes.button}>
