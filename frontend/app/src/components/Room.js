@@ -7,7 +7,9 @@ import AddIcon from '@material-ui/icons/Add';
 import TextField from '@material-ui/core/TextField';
 import { useDispatch, useSelector } from "react-redux";
 import { addCategory } from '../actions/Room';
+import Card from '@material-ui/core/Card';
 
+import CardContent from '@material-ui/core/CardContent';
 const useStyles = makeStyles({
 	root: {
 		width: '70%',
@@ -28,8 +30,15 @@ const useStyles = makeStyles({
 		backgroundColor: 'rgba(0, 0, 0, 0.5)',
 		width: '70%',
 		height: '70%',
-		marginLeft:'15%'
+		marginLeft:'15%',
 	},
+	card: {
+		margin: 'auto',
+		marginTop: '20%',
+		minWidth: 275,
+		width:"10%",
+		height:"250px",
+	}
 })
 
 
@@ -39,7 +48,12 @@ function Direct(props){
 	return (
 		<div className = {classes.dirroot}>
 			<div className = {classes.direct}>
-				{props.data.content}
+				<Card className = {classes.card}>
+					<CardContent>
+						<div>{props.data.created_user_name}</div>
+						<div>{props.data.content}</div>
+					</CardContent>
+				</Card>
 			</div>
 		</div>
 	)
