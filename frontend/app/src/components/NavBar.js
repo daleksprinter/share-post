@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { withRouter } from 'react-router';
+import { Link  } from 'react-router-dom';
 
 import { makeStyles  } from '@material-ui/core/styles';
 
@@ -41,6 +42,12 @@ function NavBar(props){
 		title: {
 			flexGrow: 1,
 		},
+		lnk: {
+			textDecoration: "none",
+			'&:visited': {
+				color:'white',
+			}
+		}
 	}));
 
 	const classes = useStyles();
@@ -53,7 +60,7 @@ function NavBar(props){
 						Share-Post
 					</Typography>
 					<Typography color="inherit">
-						<span>{username === "" ? <span>please login</span> : <span>{username}</span>}</span>                
+						<span>{username === "" ? <Link to = '/login' className = {classes.lnk}>Login</Link> : <span>{username}</span>}</span>                
 					</Typography>
 				</Toolbar>
 			</AppBar>
