@@ -9,7 +9,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
 
-
 function NavBar(props){
 	const [username, setUsername] = useState("")
 
