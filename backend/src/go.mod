@@ -3,7 +3,8 @@ module github.com/daleksprinter/share-post
 go 1.12
 
 require (
-	github.com/go-sql-driver/mysql v1.4.1
+	github.com/aws/aws-sdk-go v1.29.11
+	github.com/go-sql-driver/mysql v1.5.0
 	github.com/google/uuid v1.1.1
 	github.com/gorilla/mux v1.7.3
 	github.com/gorilla/sessions v1.2.0

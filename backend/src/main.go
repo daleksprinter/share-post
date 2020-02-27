@@ -8,7 +8,7 @@ import (
 
 	"github.com/daleksprinter/share-post/config"
 	"github.com/daleksprinter/share-post/controller"
-
+	"github.com/daleksprinter/share-post/s3"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 
@@ -20,6 +20,7 @@ import (
 
 type Server struct {
 	db     *sqlx.DB
+	bucket s3.S3
 	router *mux.Router
 }
 
