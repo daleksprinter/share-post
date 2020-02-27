@@ -46,7 +46,7 @@ function NavBar(props){
 			textDecoration: "none",
 			'&:visited': {
 				color:'white',
-			}
+			},
 		}
 	}));
 
@@ -56,10 +56,13 @@ function NavBar(props){
 		<div className={classes.root}>
 			<AppBar position="static">
 				<Toolbar>
-					<Typography variant="h6" className={classes.title}>
-						Share-Post
+					<Typography variant="h6" className={classes.title}>	
+						<Link to = '/join' className = {classes.lnk}>
+							Share-Post
+
+						</Link>
 					</Typography>
-					<Typography color="inherit">
+					<Typography variant = "h6" color="inherit">
 						<span>{username === "" ? <Link to = '/login' className = {classes.lnk}>Login</Link> : <span>{username}</span>}</span>                
 					</Typography>
 				</Toolbar>
