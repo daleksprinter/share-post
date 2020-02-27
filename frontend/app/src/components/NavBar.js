@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import { withRouter } from 'react-router';
+import { Link  } from 'react-router-dom';
 
 import { makeStyles  } from '@material-ui/core/styles';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-
 
 
 function NavBar(props){
@@ -41,6 +41,12 @@ function NavBar(props){
 		title: {
 			flexGrow: 1,
 		},
+		lnk: {
+			textDecoration: "none",
+			'&:visited': {
+				color:'white',
+			},
+		}
 	}));
 
 	const classes = useStyles();
@@ -49,11 +55,14 @@ function NavBar(props){
 		<div className={classes.root}>
 			<AppBar position="static">
 				<Toolbar>
-					<Typography variant="h6" className={classes.title}>
-						Share-Post
+					<Typography variant="h6" className={classes.title}>	
+						<Link to = '/join' className = {classes.lnk}>
+							Share-Post
+
+						</Link>
 					</Typography>
-					<Typography color="inherit">
-						<span>{username === "" ? <span>please login</span> : <span>{username}</span>}</span>                
+					<Typography variant = "h6" color="inherit">
+						<span>{username === "" ? <Link to = '/login' className = {classes.lnk}>Login</Link> : <span>{username}</span>}</span>                
 					</Typography>
 				</Toolbar>
 			</AppBar>
