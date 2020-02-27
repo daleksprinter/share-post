@@ -43,6 +43,7 @@ function NavBar(props){
 		},
 		lnk: {
 			textDecoration: "none",
+			color:'white',
 			'&:visited': {
 				color:'white',
 			},
@@ -62,7 +63,7 @@ function NavBar(props){
 						</Link>
 					</Typography>
 					<Typography variant = "h6" color="inherit">
-						<span>{username === "" ? <Link to = '/login' className = {classes.lnk}>Login</Link> : <span>{username}</span>}</span>                
+						<span>{username === "" ? <Link to = '/login' className = {classes.lnk}>Login</Link> : <Link to = '/profile' className = {classes.lnk}>{username}</Link>}</span>                
 					</Typography>
 				</Toolbar>
 			</AppBar>
