@@ -6,7 +6,7 @@ frontend/app/.env
 database/db/dbconf.yml
 database/.env
 
-
+*.DS_Store
 
 *.swp
 *.swo
