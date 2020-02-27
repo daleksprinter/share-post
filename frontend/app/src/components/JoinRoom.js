@@ -6,16 +6,15 @@ import ItemCard from '@material-ui/core/Card';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
 	card: {
-		minWidth: 275,
 		margin:"4px",
-		width:"30%",
+		width:theme.spacing(40),
 		height:"300px",
 		display:"inline-block",
 		textAlign: "center",
 	},
-});
+}));
 
 
 function JoinRoom(props){
