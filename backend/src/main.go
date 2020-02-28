@@ -58,6 +58,10 @@ func NewRouter(db *sqlx.DB) *mux.Router {
 	r.HandleFunc("/login", authen.LoginHandler)
 	r.HandleFunc("/oauth2callback", authen.OAuthCallbackHandler)
 
+	bucket := s3.NewS3()
+	usr := controller.NewUser(db, bucket)
+	r.HandleFunc("/user", usr.UpdateProfileHandler).Methods("PUT")
+
 	return r
 }
 
