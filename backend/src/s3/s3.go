@@ -2,7 +2,7 @@ package s3
 
 import (
 	"errors"
-	"fmt"
+	//	"fmt"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
@@ -13,7 +13,8 @@ import (
 )
 
 type S3 struct {
-	Uploader *s3manager.Uploader
+	Uploader   *s3manager.Uploader
+	BucketName string
 }
 
 func NewS3() *S3 {
@@ -24,7 +25,8 @@ func NewS3() *S3 {
 		Region:      aws.String("ap-northeast-1"),
 	}))
 	return &S3{
-		Uploader: s3manager.NewUploader(sess),
+		Uploader:   s3manager.NewUploader(sess),
+		BucketName: "share-pos",
 	}
 }
 
@@ -48,6 +50,17 @@ func (s S3) UploadFile(file multipart.File, filename string) error {
 	if err != nil {
 		return err
 	}
-	fmt.Println(ext)
+	_, err = s.Uploader.Upload(&s3manager.UploadInput{
+		ACL:         aws.String("public-read"),
+		Body:        file,
+		Bucket:      aws.String(s.BucketName),
+		ContentType: aws.String(ext),
+		Key:         aws.String("/profile/" + filename),
+	})
+
+	if err != nil {
+		return err
+	}
+
 	return nil
 }

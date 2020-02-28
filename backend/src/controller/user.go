@@ -21,7 +21,7 @@ func NewUser(db *sqlx.DB, bucket *s3.S3) *User {
 
 func (u *User) UpdateProfileHandler(w http.ResponseWriter, r *http.Request) {
 
-	file, _, ferr := r.FormFile("image")
+	file, fheader, ferr := r.FormFile("image")
 	defer file.Close()
 	if ferr != nil {
 		fmt.Println(ferr)
@@ -29,7 +29,13 @@ func (u *User) UpdateProfileHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	filename := "hogehoge.jpeg"
+	filename := fheader.Filename
 
-	u.bucket.UploadFile(file, filename)
+	err := u.bucket.UploadFile(file, filename)
+	if err != nil {
+		fmt.Println(ferr)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
 }
