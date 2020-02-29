@@ -39,3 +39,12 @@ func AddUser(db *sqlx.DB, u model.User) error {
 	}
 	return nil
 }
+
+func UpdateUser(db *sqlx.DB, u model.User) error {
+	query := "update user set icon = ?,nickname = ? where id = ?"
+	_, err := db.Query(query, u.Icon, u.Nickname, u.ID)
+	if err != nil {
+		return err
+	}
+	return nil
+}

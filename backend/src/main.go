@@ -8,7 +8,7 @@ import (
 
 	"github.com/daleksprinter/share-post/config"
 	"github.com/daleksprinter/share-post/controller"
-
+	"github.com/daleksprinter/share-post/s3"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 
@@ -20,6 +20,7 @@ import (
 
 type Server struct {
 	db     *sqlx.DB
+	bucket s3.S3
 	router *mux.Router
 }
 
@@ -56,6 +57,11 @@ func NewRouter(db *sqlx.DB) *mux.Router {
 	r.HandleFunc("/auth", authen.Authenticate).Methods("GET")
 	r.HandleFunc("/login", authen.LoginHandler)
 	r.HandleFunc("/oauth2callback", authen.OAuthCallbackHandler)
+
+	bucket := s3.NewS3()
+	usr := controller.NewUser(db, bucket)
+	r.HandleFunc("/user", usr.UpdateProfileHandler).Methods("PUT")
+	r.HandleFunc("/usr", usr.GetUserHandler).Methods("GET")
 
 	return r
 }
