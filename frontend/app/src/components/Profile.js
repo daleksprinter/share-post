@@ -24,8 +24,9 @@ function NotExist() {
 
 function Exist(props) {
 	const classes = useStyles()
+	console.log(props)
 	return (
-		<img src = {`https://share-pos.s3-ap-northeast-1.amazonaws.com/profile/${props.icon_url}`} className = {classes.icon}/>
+		<img src = {`https://share-pos.s3-ap-northeast-1.amazonaws.com/profile/${props.url}`} className = {classes.icon}/>
 	)
 }
 
@@ -46,7 +47,7 @@ function Profile(props){
 			}
 			return res.json()
 		}).then(json => {
-			console.log(json)
+			console.log(json.Icon.String)
 			set_icon_url(json.Icon.String)
 			set_username(json.nickname)
 		}).catch(err => {

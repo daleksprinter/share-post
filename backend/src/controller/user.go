@@ -1,9 +1,11 @@
 package controller
 
 import (
+	"database/sql"
 	"encoding/json"
 	"fmt"
 	"github.com/daleksprinter/share-post/auth"
+	"github.com/daleksprinter/share-post/repository"
 	"github.com/daleksprinter/share-post/s3"
 	"github.com/daleksprinter/share-post/util"
 	"github.com/jmoiron/sqlx"
@@ -32,8 +34,7 @@ func (u *User) UpdateProfileHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	username := r.FormValue("username")
-	fmt.Println(file, fheader.Filename)
-	fmt.Println("username", username)
+
 	filename, err := util.GenerateUUID()
 	if err != nil {
 		fmt.Println(ferr)
@@ -54,6 +55,28 @@ func (u *User) UpdateProfileHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
+
+	usr, err := auth.GetRequestedUser(u.db, r)
+	if err != nil {
+		fmt.Println(err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	usr.Nickname = username
+	usr.Icon = sql.NullString{
+		String: filename,
+		Valid:  true,
+	}
+	fmt.Println(usr)
+	err = repository.UpdateUser(u.db, usr)
+	if err != nil {
+		fmt.Println(err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
 
 }
 
