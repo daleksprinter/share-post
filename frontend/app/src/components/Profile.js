@@ -24,7 +24,6 @@ function NotExist() {
 
 function Exist(props) {
 	const classes = useStyles()
-	console.log(props)
 	return (
 		<img src = {`https://share-pos.s3-ap-northeast-1.amazonaws.com/profile/${props.url}`} className = {classes.icon}/>
 	)
@@ -47,7 +46,6 @@ function Profile(props){
 			}
 			return res.json()
 		}).then(json => {
-			console.log(json.Icon.String)
 			set_icon_url(json.Icon.String)
 			set_username(json.nickname)
 		}).catch(err => {
@@ -76,10 +74,8 @@ function Profile(props){
 		const img = createObjectURL(e.target.files[0])
 		set_icon(img)
 		set_filedata(e.target.files[0])
-		console.log('hoge', e.target.files[0])
 	}
 	const handletxtchange = (e) => {
-		console.log(e.target.value)
 		set_username(e.target.value)
 	}
 	return(
