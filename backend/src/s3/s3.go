@@ -1,7 +1,6 @@
 package s3
 
 import (
-	"errors"
 	//	"fmt"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
@@ -9,7 +8,6 @@ import (
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 	"mime/multipart"
 	"os"
-	"strings"
 )
 
 type S3 struct {
@@ -29,28 +27,9 @@ func NewS3() *S3 {
 		BucketName: "share-pos",
 	}
 }
+func (s S3) UploadFile(file multipart.File, filename string, ext string) error {
 
-func getFileExtension(filename string) (string, error) {
-	if strings.HasSuffix(filename, ".jpeg") {
-		return "image/jpeg", nil
-	} else if strings.HasSuffix(filename, ".jpg") {
-		return "image/jpeg", nil
-	} else if strings.HasSuffix(filename, ".png") {
-		return "image/png", nil
-	} else if strings.HasSuffix(filename, ".gif") {
-		return "image/gif", nil
-	}
-
-	return "", errors.New("file is not picture, use .jpeg, .jpg, .png or gif data")
-}
-
-func (s S3) UploadFile(file multipart.File, filename string) error {
-
-	ext, err := getFileExtension(filename)
-	if err != nil {
-		return err
-	}
-	_, err = s.Uploader.Upload(&s3manager.UploadInput{
+	_, err := s.Uploader.Upload(&s3manager.UploadInput{
 		ACL:         aws.String("public-read"),
 		Body:        file,
 		Bucket:      aws.String(s.BucketName),

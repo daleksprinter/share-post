@@ -3,6 +3,7 @@ package controller
 import (
 	"fmt"
 	"github.com/daleksprinter/share-post/s3"
+	"github.com/daleksprinter/share-post/util"
 	"github.com/jmoiron/sqlx"
 	"net/http"
 )
@@ -29,9 +30,21 @@ func (u *User) UpdateProfileHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	filename := fheader.Filename
+	filename, err := util.GenerateUUID()
+	if err != nil {
+		fmt.Println(ferr)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
 
-	err := u.bucket.UploadFile(file, filename)
+	ext, err := util.GetFileExtension(fheader.Filename)
+	if err != nil {
+		fmt.Println(ferr)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	err = u.bucket.UploadFile(file, filename, ext)
 	if err != nil {
 		fmt.Println(ferr)
 		w.WriteHeader(http.StatusBadRequest)
