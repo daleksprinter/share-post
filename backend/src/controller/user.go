@@ -32,6 +32,7 @@ func (u *User) UpdateProfileHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	fmt.Println(file, fheader.Filename)
 	filename, err := util.GenerateUUID()
 	if err != nil {
 		fmt.Println(ferr)

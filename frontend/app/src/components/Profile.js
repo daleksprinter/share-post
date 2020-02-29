@@ -29,7 +29,8 @@ function Profile(props){
 	const classes = useStyles()
 	const [icon_url, set_icon_url] = useState("")
 	const [username, set_username] = useState("")
-	const [icon, set_icon] = useState("")
+	const [icon, set_icon] = useState()
+	const [filedata, set_filedata] = useState()
 
 	useEffect(() => {
 		const url = "/usr"
@@ -48,13 +49,26 @@ function Profile(props){
 
 	}, [])
 	const handleClick = () => {
-		console.log('clicked')
+		const formdata = new FormData()
+		formdata.append('image', filedata)
+		const url = '/user'
+		fetch(url, {
+			method: 'PUT',
+			body: formdata,
+		}).then(res => {
+			if(!res.ok){
+				throw Error(res.statusText)
+			}
+		}).catch(err => {
+			console.log(err)
+		})
 	}
 	const createObjectURL = (window.URL || window.webkitURL).createObjectURL || window.createObjectURL;
 	const handleChange = (e) => {
 		const img = createObjectURL(e.target.files[0])
 		set_icon(img)
-		console.log('hoge', img)
+		set_filedata(e.target.files[0])
+		console.log('hoge', e.target.files[0])
 	}
 	return(
 		<div>
