@@ -61,6 +61,7 @@ func NewRouter(db *sqlx.DB) *mux.Router {
 	bucket := s3.NewS3()
 	usr := controller.NewUser(db, bucket)
 	r.HandleFunc("/user", usr.UpdateProfileHandler).Methods("PUT")
+	r.HandleFunc("/usr", usr.GetUserHandler).Methods("GET")
 
 	return r
 }

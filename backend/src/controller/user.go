@@ -1,7 +1,9 @@
 package controller
 
 import (
+	"encoding/json"
 	"fmt"
+	"github.com/daleksprinter/share-post/auth"
 	"github.com/daleksprinter/share-post/s3"
 	"github.com/daleksprinter/share-post/util"
 	"github.com/jmoiron/sqlx"
@@ -51,4 +53,15 @@ func (u *User) UpdateProfileHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+}
+
+func (u *User) GetUserHandler(w http.ResponseWriter, r *http.Request) {
+	usr, err := auth.GetRequestedUser(u.db, r)
+	if err != nil {
+		fmt.Println(err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	json.NewEncoder(w).Encode(&usr)
 }
