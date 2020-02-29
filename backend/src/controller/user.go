@@ -31,8 +31,9 @@ func (u *User) UpdateProfileHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-
+	username := r.FormValue("username")
 	fmt.Println(file, fheader.Filename)
+	fmt.Println("username", username)
 	filename, err := util.GenerateUUID()
 	if err != nil {
 		fmt.Println(ferr)

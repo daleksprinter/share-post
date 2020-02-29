@@ -1,25 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import none from '../assets/img/google.png'
 import Button from '@material-ui/core/Button';
-
+import TextField from '@material-ui/core/TextField';
 import { makeStyles  } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
 	inputfile: {
 		textAlign:'center',
 	},
+	icon : {
+		width : theme.spacing(10),
+		height : theme.spacing(10),
+	}
 }));
 
 
 function NotExist() {
+	const classes = useStyles()
 	return (
-		<img src = {none}/>
+		<img src = {none} className = {classes.icon}/>
 	)
 }
 
 function Exist(props) {
+	const classes = useStyles()
 	return (
-		<img src = {`https://share-pos.s3-ap-northeast-1.amazonaws.com/profile/${props.icon_url}`} />
+		<img src = {`https://share-pos.s3-ap-northeast-1.amazonaws.com/profile/${props.icon_url}`} className = {classes.icon}/>
 	)
 }
 
@@ -51,6 +57,7 @@ function Profile(props){
 	const handleClick = () => {
 		const formdata = new FormData()
 		formdata.append('image', filedata)
+		formdata.append('username', username)
 		const url = '/user'
 		fetch(url, {
 			method: 'PUT',
@@ -70,13 +77,17 @@ function Profile(props){
 		set_filedata(e.target.files[0])
 		console.log('hoge', e.target.files[0])
 	}
+	const handletxtchange = (e) => {
+		console.log(e.target.value)
+		set_username(e.target.value)
+	}
 	return(
 		<div>
 			{icon_url === "" ? <NotExist /> : <Exist url = {icon_url}/>}
 			<input type = 'file' onChange = {handleChange}/>
-			<img src = {icon} />
+			<img src = {icon} className = {classes.icon}/>
 			<div>
-				{username}
+				<TextField onChange = {handletxtchange} value = {username} />
 			</div>
 			<Button variant = "contained" color = "primary" onClick = {handleClick} >変更</Button>
 		</div>
