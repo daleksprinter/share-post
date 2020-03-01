@@ -29,7 +29,7 @@ func NewServer() *Server {
 }
 
 func NewDB() (*sqlx.DB, error) {
-	db, err := sqlx.Open("mysql", "root:password@tcp(0.0.0.0)/share_pos")
+	db, err := sqlx.Open("mysql", "root:password@tcp(share-pos-db)/share_pos")
 	if err != nil {
 		fmt.Println(err)
 		return nil, err

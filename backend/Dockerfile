@@ -1,18 +1,22 @@
-FROM golang:1.12.6
-
+FROM golang:1.12.6 as builder
 
 RUN mkdir /go/src/work
-
 WORKDIR /go/src/work
 
 COPY ./src/go.mod .
-COPY ./src/go.sum .
 ENV GO111MODULE=on
 RUN go mod download
 
 COPY ./src/ .
 
-RUN go build -o /main
+ENV CGO_ENABLED=0
+ENV GOOS=linux
+ENV GOARCH=amd64
 
+RUN go build -o main
+
+
+FROM alpine:latest
+COPY --from=builder /go/src/work/main /main
+COPY ./src/.env /
 ENTRYPOINT ["/main"]
-EXPOSE 8080
