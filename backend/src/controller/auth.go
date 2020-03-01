@@ -123,5 +123,5 @@ func (a *Auth) OAuthCallbackHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	http.Redirect(w, r, "http://localhost:3000/", http.StatusFound)
+	http.Redirect(w, r, "http://localhost:80", http.StatusFound)
 }
