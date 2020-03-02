@@ -38,7 +38,7 @@ function JoinRoom(props){
 	}
 
 	const handleclickjoin = (e) => {
-		const url = `/rooms/${room_name_join}`;
+		const url = `/api/rooms/${room_name_join}`;
 		fetch(url, {
 			method:"POST",
 			headers: {

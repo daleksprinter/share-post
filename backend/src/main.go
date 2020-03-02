@@ -15,7 +15,6 @@ import (
 	"github.com/gorilla/mux"
 
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	"github.com/joho/godotenv"
 )
 
 type Server struct {
@@ -29,7 +28,14 @@ func NewServer() *Server {
 }
 
 func NewDB() (*sqlx.DB, error) {
-	db, err := sqlx.Open("mysql", "root:password@tcp(share-pos-db)/share_pos")
+	DBName := os.Getenv("DB_NAME")
+	DBHost := os.Getenv("DB_HOST")
+	DBPort := os.Getenv("DB_PORT")
+	DBUser := os.Getenv("DB_USER")
+	DBPass := os.Getenv("DB_PASSWORD")
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", DBUser, DBPass, DBHost, DBPort, DBName)
+	fmt.Println(dsn)
+	db, err := sqlx.Open("mysql", dsn)
 	if err != nil {
 		fmt.Println(err)
 		return nil, err
@@ -41,27 +47,27 @@ func NewRouter(db *sqlx.DB) *mux.Router {
 	r := mux.NewRouter()
 
 	card := controller.NewCard(db)
-	r.HandleFunc("/rooms/{roomname}/cards", card.GetCardsByRoomNameHandler).Methods("GET")
-	r.HandleFunc("/rooms/{roomname}/categories/{category_id}/cards", card.PostCardHandler).Methods("POST")
+	r.HandleFunc("/api/rooms/{roomname}/cards", card.GetCardsByRoomNameHandler).Methods("GET")
+	r.HandleFunc("/api/rooms/{roomname}/categories/{category_id}/cards", card.PostCardHandler).Methods("POST")
 
 	category := controller.NewCategory(db)
-	r.HandleFunc("/rooms/{roomname}/categories", category.GetCategoriesByRoomNameHandler).Methods("GET")
-	r.HandleFunc("/rooms/{roomname}/category", category.PostCategoryHandler).Methods("POST")
+	r.HandleFunc("/api/rooms/{roomname}/categories", category.GetCategoriesByRoomNameHandler).Methods("GET")
+	r.HandleFunc("/api/rooms/{roomname}/category", category.PostCategoryHandler).Methods("POST")
 
 	room := controller.NewRoom(db)
-	r.HandleFunc("/ws/{roomname}", room.ServeWs).Methods("GET")
-	r.HandleFunc("/rooms/{roomname}", room.JoinRoomHandler).Methods("POST")
-	r.HandleFunc("/rooms", room.CreateRoomHandler).Methods("POST")
+	r.HandleFunc("/ws/{roomname}", room.ServeWs)
+	r.HandleFunc("/api/rooms/{roomname}", room.JoinRoomHandler).Methods("POST")
+	r.HandleFunc("/api/rooms", room.CreateRoomHandler).Methods("POST")
 
 	authen := controller.NewAuth(db, config.ConfigureOAuthClient())
-	r.HandleFunc("/auth", authen.Authenticate).Methods("GET")
-	r.HandleFunc("/login", authen.LoginHandler)
-	r.HandleFunc("/oauth2callback", authen.OAuthCallbackHandler)
+	r.HandleFunc("/api/auth", authen.Authenticate).Methods("GET")
+	r.HandleFunc("/api/login", authen.LoginHandler)
+	r.HandleFunc("/api/oauth2callback", authen.OAuthCallbackHandler)
 
 	bucket := s3.NewS3()
 	usr := controller.NewUser(db, bucket)
-	r.HandleFunc("/user", usr.UpdateProfileHandler).Methods("PUT")
-	r.HandleFunc("/usr", usr.GetUserHandler).Methods("GET")
+	r.HandleFunc("/api/user", usr.UpdateProfileHandler).Methods("PUT")
+	r.HandleFunc("/api/usr", usr.GetUserHandler).Methods("GET")
 
 	return r
 }
@@ -76,30 +82,22 @@ func (s *Server) Init() {
 	s.router = NewRouter(db)
 }
 
-func (s *Server) Run(addr string) {
-	log.Printf("Listening on port %s", addr)
+func (s *Server) Run() {
+	fmt.Println("Listening on port 8080")
 
 	srv := &http.Server{
 		Handler: s.router,
-		Addr:    addr,
+		Addr:    ":8080",
 	}
 
 	log.Fatal(srv.ListenAndServe())
 }
 
 func main() {
-	err := godotenv.Load()
-	if err != nil {
-		panic(err)
-	}
-	datasource := os.Getenv("DATASOURCE")
-	if datasource == "" {
-		datasource = ":8080"
-	}
 
 	s := NewServer()
 	s.Init()
-	s.Run(datasource)
+	s.Run()
 
 	defer s.db.Close()
 }

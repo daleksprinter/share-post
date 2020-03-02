@@ -8,6 +8,7 @@ class Home extends Component{
     }
 
     render(){
+	console.log(process.env.REACT_APP_BACKEND_HOST)
         return(
             <div>
             </div>

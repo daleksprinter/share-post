@@ -48,7 +48,7 @@ function Login(props){
 			<Paper className = {classes.paper}>
 				
 				<div className = {classes.links}>
-					<a href = "http://localhost:8080/login" className = {classes.lnk}>
+					<a href = {`/api/login`} className = {classes.lnk}>
 						<img src = {google} className = {classes.img}/>
 						<div className = {classes.msg}>Googleアカウントでログイン</div>
 					</a>

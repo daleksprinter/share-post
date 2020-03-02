@@ -12,6 +12,8 @@ services:
   share-pos-backend:
     build: ./backend
     container_name: share-pos-backend
+    env_file:
+            - backend/src/.env
     ports:
       - 8080:8080
     tty: true

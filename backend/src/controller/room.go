@@ -24,6 +24,7 @@ func NewRoom(db *sqlx.DB) *RoomController {
 }
 
 func (rc *RoomController) ServeWs(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("websocket connection requested")
 	vars := mux.Vars(r)
 	roomname := vars["roomname"]
 	room, ok := websocket.Rooms[roomname]

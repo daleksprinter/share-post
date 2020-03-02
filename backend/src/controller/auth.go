@@ -3,14 +3,17 @@ package controller
 import (
 	"encoding/json"
 	"fmt"
+	"net/http"
+	"os"
+
 	"github.com/daleksprinter/share-post/auth"
 	"github.com/daleksprinter/share-post/model"
 	"github.com/daleksprinter/share-post/repository"
 	"github.com/daleksprinter/share-post/session"
 	"github.com/jmoiron/sqlx"
-	"net/http"
 
 	"context"
+
 	"golang.org/x/oauth2"
 
 	"github.com/google/uuid"
@@ -123,5 +126,5 @@ func (a *Auth) OAuthCallbackHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	http.Redirect(w, r, "http://localhost:80", http.StatusFound)
+	http.Redirect(w, r, fmt.Sprintf("http://%s", os.Getenv("FRONTEND_URL")), http.StatusFound)
 }

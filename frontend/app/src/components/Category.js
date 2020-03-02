@@ -11,7 +11,7 @@ function Category(props){
 	const post_card = (txt, id) => {
 		const {params} = props.match
 		const room_id = params.id
-		const url = `/rooms/${room_id}/categories/${props.data.id}/cards`;
+		const url = `/api/rooms/${room_id}/categories/${props.data.id}/cards`;
 		fetch(url, {
 			method: "POST",
 			headers: {

@@ -39,7 +39,7 @@ function Profile(props){
 	const [filedata, set_filedata] = useState()
 
 	useEffect(() => {
-		const url = "/usr"
+		const url = "/api/usr"
 		fetch(url).then(res => {
 			if(!res.ok){
 				throw Error(res.statusText)
@@ -57,7 +57,7 @@ function Profile(props){
 		const formdata = new FormData()
 		formdata.append('image', filedata)
 		formdata.append('username', username)
-		const url = '/user'
+		const url = '/api/user'
 		fetch(url, {
 			method: 'PUT',
 			body: formdata,

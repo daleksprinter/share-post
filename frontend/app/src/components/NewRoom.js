@@ -40,7 +40,7 @@ function NewRoom(props){
 	}
 
 	const handleclicknew = (e) => {
-		const url = `/rooms`
+		const url = `/api/rooms`
 		const data = {
 			room_name: room_name_new,
 			is_private: is_private,

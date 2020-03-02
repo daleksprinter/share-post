@@ -11,9 +11,9 @@ import Typography from '@material-ui/core/Typography';
 
 function NavBar(props){
 	const [username, setUsername] = useState("")
-
 	useEffect(() => {
-		const url = `/auth`
+		const url = `/api/auth`
+		console.log(url)
 		fetch(url).then(res => {
 			if(!res.ok){
 				throw Error(res.statusText)
