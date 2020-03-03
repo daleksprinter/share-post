@@ -19,5 +19,4 @@ RUN go build -o main
 FROM alpine:latest
 RUN apk --no-cache add ca-certificates
 COPY --from=builder /go/src/work/main /main
-COPY ./src/.env /
 ENTRYPOINT ["/main"]
