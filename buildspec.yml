@@ -8,11 +8,11 @@ phases:
   build:
     commands:
       - echo Building the frotnend Docker image...
-      - docker image build --file Dockerfile ./frontend/ -t share-post-frontend:latest
+      - docker build -f ./frontend/Dockerfile -t share-post-frontend:latest
       - docker tag share-post-frontend:latest 384382957544.dkr.ecr.us-east-1.amazonaws.com/share-post-frontend:latest
 
       - echo building the backend docker image...
-      - docker image build --file Dockerfile ./backend/ -t share-post-backend:latest
+      - docker build -f ./backend/Dockerfile -t share-post-backend:latest
       - docker tag share-post-backend:latest 384382957544.dkr.ecr.us-east-1.amazonaws.com/share-post-backend:latest
 
   post_build:
