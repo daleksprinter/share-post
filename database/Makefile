@@ -38,3 +38,7 @@ prod-migrate/redo:
 prod-db/reset:
 	docker-compose exec share-pos-db mysql -h $(PROD_HOST) -u $(PROD_USER) -p$(PROD_PASSWORD) -e "DROP DATABASE if exists $(DBNAME); CREATE DATABASE $(DBNAME);"
 
+
+mig/up:
+	echo ${GOOSE_DNS};
+	GOOSE_DNS=${GOOSE_DNS} goose -env production up
