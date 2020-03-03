@@ -76,6 +76,7 @@ func (a *Auth) LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 func (a *Auth) OAuthCallbackHandler(w http.ResponseWriter, r *http.Request) {
 
+	fmt.Println("oauth callback handler requested")
 	code := r.FormValue("code")
 	tok, err := a.OAuthConfig.Exchange(context.Background(), code)
 	if err != nil {
@@ -125,6 +126,7 @@ func (a *Auth) OAuthCallbackHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-
-	http.Redirect(w, r, fmt.Sprintf("http://%s", os.Getenv("FRONTEND_URL")), http.StatusFound)
+	front := os.Getenv("FRONTEND_URL")
+	fmt.Println(front)
+	http.Redirect(w, r, fmt.Sprintf("http://%s", front), http.StatusFound)
 }

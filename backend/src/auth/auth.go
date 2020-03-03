@@ -13,6 +13,7 @@ import (
 func GetRequestedUser(db *sqlx.DB, r *http.Request) (model.User, error) {
 	email, err := session.GetEmailFromSession(r)
 
+	fmt.Println(email)
 	if err != nil {
 		fmt.Println(err)
 		return model.User{}, err
