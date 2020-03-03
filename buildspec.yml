@@ -26,7 +26,7 @@ phases:
       - docker push 384382957544.dkr.ecr.ap-northeast-1.amazonaws.com/share-post-backend:latest
 
       - echo Writing image definitions file...
-      - printf '[{"name":"frontend","imageUri":"%s"}, {"name":"backend", "imageUri":"%s"}]' 384382957544.dkr.ecr.ap-northeast-1.amazonaws.com/share-post-frotnend:latest 384382957544.dkr.ecr.ap-northeast-1.amazonaws.com/share-post-backend:latest> imagedefinitions.json
+      - printf '[{"name":"frontend","imageUri":"%s"}, {"name":"backend", "imageUri":"%s"}]' 384382957544.dkr.ecr.ap-northeast-1.amazonaws.com/share-post-frontend:latest 384382957544.dkr.ecr.ap-northeast-1.amazonaws.com/share-post-backend:latest> imagedefinitions.json
 artifacts:
   files:
     - imagedefinitions.json
