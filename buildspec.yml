@@ -18,10 +18,10 @@ phases:
   post_build:
     commands:
       - echo Pushing the frontend Docker image...
-      - docker push 384382957544.dkr.ecr.us-east-1.amazonaws.com/share-post-frontend:latest
+      - docker push 384382957544.dkr.ecr.ap-northeast-1.amazonaws.com/share-post-frontend:latest
 
       - echo Pushing the backend docker image...
-      - docker push 384382957544.dkr.ecr.us-east-1.amazonaws.com/share-post-backend:latest
+      - docker push 384382957544.dkr.ecr.ap-northeast-1.amazonaws.com/share-post-backend:latest
 
       - echo Writing image definitions file...
       - printf '[{"name":"{frontend}","imageUri":"%s"}, {"name":"{backend}", "imageUri":"%s"}]' 384382957544.dkr.ecr.us-east-1.amazonaws.com/share-post-frotnend:latest 384382957544.dkr.ecr.us-east-1.amazonaws.com/share-post-backend:latest> imagedefinitions.json
