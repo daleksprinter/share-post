@@ -40,5 +40,4 @@ prod-db/reset:
 
 
 mig/up:
-	echo ${GOOSE_DNS};
 	GOOSE_DNS=${GOOSE_DNS} goose -env production up

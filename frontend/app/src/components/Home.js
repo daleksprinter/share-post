@@ -10,7 +10,8 @@ class Home extends Component{
     render(){
         return(
             <div>
-				this is home page		
+				this is home page 
+				master merge protected
             </div>
         )
     }
