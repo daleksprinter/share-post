@@ -14,5 +14,6 @@ require (
 	github.com/joho/godotenv v1.3.0
 	github.com/satori/go.uuid v1.2.0
 	golang.org/x/oauth2 v0.0.0-20190226205417-e64efc72b421
+	golang.org/x/tools v0.0.0-20200309184216-92d517f97b44 // indirect
 	google.golang.org/api v0.3.1
 )

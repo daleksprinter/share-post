@@ -12,6 +12,7 @@ class Home extends Component{
             <div>
 				this is home page 
 				master merge protected
+				<div></div>	
             </div>
         )
     }
