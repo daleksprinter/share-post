@@ -12,6 +12,7 @@ type DB struct {
 
 func NewDB(dbname, dbhost, dbport, dbuser, dbpass string) *DB {
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", dbuser, dbpass, dbhost, dbport, dbname)
+	fmt.Println(dsn)
 	db, err := sqlx.Open("mysql", dsn)
 	if err != nil {
 		panic(err)

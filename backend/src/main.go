@@ -34,7 +34,7 @@ func (s *Server) Init() {
 	DBUser := os.Getenv("DB_USER")
 	DBPass := os.Getenv("DB_PASSWORD")
 
-	s.db = db.NewDB(DBUser, DBPass, DBHost, DBPort, DBName)
+	s.db = db.NewDB(DBName, DBHost, DBPort, DBUser, DBPass)
 	s.bucket = s3.NewS3()
 	s.router = router.NewRouter(s.db.GetDB(), s.bucket)
 }
