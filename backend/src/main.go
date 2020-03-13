@@ -9,7 +9,9 @@ import (
 	"github.com/daleksprinter/share-post/db"
 	"github.com/daleksprinter/share-post/router"
 	"github.com/daleksprinter/share-post/s3"
+	"github.com/daleksprinter/share-post/session"
 	_ "github.com/go-sql-driver/mysql"
+	redisstore "gopkg.in/boj/redistore.v1"
 
 	"github.com/gorilla/mux"
 
@@ -51,10 +53,13 @@ func (s *Server) Run() {
 }
 
 func main() {
+	var err error
+	session.Store, err = redisstore.NewRediStore(10, "tcp", "share-pos-cache:6379", "", []byte("secret-key"))
+	defer session.Store.Close()
+	fmt.Println(err)
 
 	s := NewServer()
 	s.Init()
-	s.Run()
-
 	defer s.db.Close()
+	s.Run()
 }

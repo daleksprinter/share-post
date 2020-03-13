@@ -4,6 +4,7 @@ go 1.12
 
 require (
 	github.com/aws/aws-sdk-go v1.29.11
+	github.com/garyburd/redigo v1.6.0 // indirect
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/google/uuid v1.1.1
 	github.com/gorilla/mux v1.7.3
@@ -16,4 +17,5 @@ require (
 	golang.org/x/oauth2 v0.0.0-20190226205417-e64efc72b421
 	golang.org/x/tools v0.0.0-20200309184216-92d517f97b44 // indirect
 	google.golang.org/api v0.3.1
+	gopkg.in/boj/redistore.v1 v1.0.0-20160128113310-fc113767cd6b
 )

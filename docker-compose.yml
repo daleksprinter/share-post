@@ -14,6 +14,9 @@ services:
     container_name: share-pos-backend
     env_file:
             - backend/src/.env
+    depends_on:
+        - share-pos-db
+        - share-pos-cache
     ports:
       - 8080:8080
     tty: true
@@ -23,5 +26,12 @@ services:
     container_name: share-pos-frontend
     tty: true
     ports:
-            - 80:80
+      - 80:80
+    depends_on:
+        - share-pos-backend
 
+  share-pos-cache:
+    container_name: share-pos-cache
+    image: redis
+    ports:
+      - 6379:6379

@@ -1,16 +1,16 @@
 package session
 
 import (
-	"github.com/gorilla/sessions"
-
 	"fmt"
-	oauthapi "google.golang.org/api/oauth2/v2"
 	"net/http"
+
+	oauthapi "google.golang.org/api/oauth2/v2"
+	redisstore "gopkg.in/boj/redistore.v1"
 )
 
-var Store = sessions.NewCookieStore([]byte("secret-key"))
-var SessionName = "sess"
+var Store *redisstore.RediStore
 
+const SessionName = "sess"
 const emailKey = "userinfoemail"
 
 func SaveEmailToSession(w http.ResponseWriter, r *http.Request, data oauthapi.Userinfoplus) error {

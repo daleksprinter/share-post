@@ -16,8 +16,6 @@ import (
 
 	"golang.org/x/oauth2"
 
-	"github.com/google/uuid"
-
 	oauthapi "google.golang.org/api/oauth2/v2"
 )
 
@@ -49,8 +47,7 @@ func (a *Auth) Authenticate(w http.ResponseWriter, r *http.Request) {
 
 func (a *Auth) LoginHandler(w http.ResponseWriter, r *http.Request) {
 
-	sessionID := uuid.Must(uuid.NewRandom()).String()
-	oauthFlowSession, err := session.Store.New(r, sessionID)
+	oauthFlowSession, err := session.Store.New(r, session.SessionName)
 	if err != nil {
 		fmt.Println(err)
 		w.WriteHeader(http.StatusInternalServerError)
@@ -67,7 +64,7 @@ func (a *Auth) LoginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	url := a.OAuthConfig.AuthCodeURL(sessionID, oauth2.ApprovalForce,
+	url := a.OAuthConfig.AuthCodeURL(session.SessionName, oauth2.ApprovalForce,
 		oauth2.AccessTypeOnline)
 
 	http.Redirect(w, r, url, http.StatusFound)

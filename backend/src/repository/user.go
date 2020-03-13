@@ -2,6 +2,7 @@ package repository
 
 import (
 	"fmt"
+
 	"github.com/daleksprinter/share-post/model"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/jmoiron/sqlx"
@@ -31,7 +32,7 @@ func GetUserByID(db *sqlx.DB, id int) (model.User, error) {
 }
 
 func AddUser(db *sqlx.DB, u model.User) error {
-	query := "insert into user (email, nickname) values(?, ?)"
+	query := "insert ignore into user (email, nickname) values(?, ?)"
 	_, err := db.Query(query, u.Email, u.Nickname)
 	if err != nil {
 		fmt.Println(err)
