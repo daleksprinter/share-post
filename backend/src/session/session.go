@@ -47,3 +47,16 @@ func GetEmailFromSession(r *http.Request) (string, error) {
 	return email, nil
 
 }
+
+func DelEmailFromSession(w http.ResponseWriter, r *http.Request) error {
+	sess, err := Store.Get(r, SessionName)
+	if err != nil {
+		return err
+	}
+	delete(sess.Values, emailKey)
+
+	if err := sess.Save(r, w); err != nil {
+		return err
+	}
+	return nil
+}

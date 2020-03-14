@@ -28,6 +28,7 @@ func NewRouter(db *sqlx.DB, bucket *s3.S3) *mux.Router {
 	r.HandleFunc("/api/auth", authen.Authenticate).Methods("GET")
 	r.HandleFunc("/api/login", authen.LoginHandler)
 	r.HandleFunc("/api/oauth2callback", authen.OAuthCallbackHandler)
+	r.HandleFunc("/api/logout", authen.LogoutHandler).Methods("GET")
 
 	usr := controller.NewUser(db, bucket)
 	r.HandleFunc("/api/user", usr.UpdateProfileHandler).Methods("PUT")

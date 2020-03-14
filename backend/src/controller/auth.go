@@ -127,3 +127,13 @@ func (a *Auth) OAuthCallbackHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(front)
 	http.Redirect(w, r, fmt.Sprintf("http://%s", front), http.StatusFound)
 }
+
+func (a *Auth) LogoutHandler(w http.ResponseWriter, r *http.Request) {
+	err := session.DelEmailFromSession(w, r)
+	if err != nil {
+		fmt.Println(err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+}

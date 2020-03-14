@@ -2,10 +2,11 @@ package auth
 
 import (
 	"fmt"
+	"net/http"
+
 	"github.com/daleksprinter/share-post/model"
 	"github.com/daleksprinter/share-post/repository"
 	"github.com/daleksprinter/share-post/session"
-	"net/http"
 
 	"github.com/jmoiron/sqlx"
 )
@@ -15,14 +16,12 @@ func GetRequestedUser(db *sqlx.DB, r *http.Request) (model.User, error) {
 
 	fmt.Println(email)
 	if err != nil {
-		fmt.Println(err)
 		return model.User{}, err
 	}
 
 	user, err := repository.GetUserByEmail(db, email)
 
 	if err != nil {
-		fmt.Println(err)
 		return model.User{}, err
 	}
 

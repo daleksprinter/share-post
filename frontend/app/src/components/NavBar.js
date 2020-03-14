@@ -51,6 +51,17 @@ function NavBar(props){
 	}));
 
 	const classes = useStyles();
+	
+	let logout = () => {
+		const url = "/api/logout"
+		fetch(url).then(res => {
+			if(!res.ok){
+				throw Error(res.statusText)
+			}
+		}).catch(err => {
+			console.log(err)
+		})
+	}
 
 	return(
 		<div className={classes.root}>
@@ -63,8 +74,9 @@ function NavBar(props){
 						</Link>
 					</Typography>
 					<Typography variant = "h6" color="inherit">
-						<span>{username === "" ? <Link to = '/login' className = {classes.lnk}>Login</Link> : <Link to = '/profile' className = {classes.lnk}>{username}</Link>}</span>                
+						<span>{username === "" ? <Link to = '/login' className = {classes.lnk}>Login</Link> : <Link to = '/profile' className = {classes.lnk}>{username}</Link>}</span>             
 					</Typography>
+					<button onClick = {logout}>logout</button>
 				</Toolbar>
 			</AppBar>
 		</div>
