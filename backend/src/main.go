@@ -33,6 +33,9 @@ func (s *Server) Init() {
 
 	DBName := os.Getenv("DB_NAME")
 	DBHost := os.Getenv("DB_HOST")
+	if DBHost == "" {
+		DBHost = "127.0.0.1"
+	}
 	DBPort := os.Getenv("DB_PORT")
 	DBUser := os.Getenv("DB_USER")
 	DBPass := os.Getenv("DB_PASSWORD")
@@ -71,6 +74,9 @@ func main() {
 	}
 	var err error
 	CacheHost := os.Getenv("CACHE_HOST")
+	if CacheHost == "" {
+		CacheHost = "127.0.0.1"
+	}
 	dsn := fmt.Sprintf("%s:%s", CacheHost, "6379")
 	fmt.Println(dsn)
 	session.Store, err = redisstore.NewRediStore(10, "tcp", dsn, "", []byte("secret-key"))

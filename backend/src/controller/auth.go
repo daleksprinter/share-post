@@ -78,7 +78,7 @@ func (a *Auth) OAuthCallbackHandler(w http.ResponseWriter, r *http.Request) {
 	code := r.FormValue("code")
 	tok, err := a.OAuthConfig.Exchange(context.Background(), code)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("hoge", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -102,7 +102,7 @@ func (a *Auth) OAuthCallbackHandler(w http.ResponseWriter, r *http.Request) {
 	ui, err := svr.Userinfo.Get().Do()
 
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("fuga", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -124,8 +124,10 @@ func (a *Auth) OAuthCallbackHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-	front := os.Getenv("FRONTEND_URL")
-	fmt.Println(front)
+	front := os.Getenv("FRONTEND_HOST")
+	if front == "" {
+		front = "localhost:80"
+	}
 	http.Redirect(w, r, fmt.Sprintf("http://%s", front), http.StatusFound)
 }
 
