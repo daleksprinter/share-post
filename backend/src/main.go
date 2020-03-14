@@ -11,6 +11,7 @@ import (
 	"github.com/daleksprinter/share-post/s3"
 	"github.com/daleksprinter/share-post/session"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/joho/godotenv"
 	redisstore "gopkg.in/boj/redistore.v1"
 
 	"github.com/gorilla/mux"
@@ -52,12 +53,31 @@ func (s *Server) Run() {
 	log.Fatal(srv.ListenAndServe())
 }
 
-func main() {
-	var err error
-	session.Store, err = redisstore.NewRediStore(10, "tcp", "share-pos-cache:6379", "", []byte("secret-key"))
-	defer session.Store.Close()
-	fmt.Println(err)
+func ExistFile(path string) bool {
+	_, err := os.Stat(path)
+	return !os.IsNotExist(err)
+}
 
+func EnvLoad() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+func main() {
+	if ExistFile("./.env") {
+		EnvLoad()
+	}
+	var err error
+	CacheHost := os.Getenv("CACHE_HOST")
+	dsn := fmt.Sprintf("%s:%s", CacheHost, "6379")
+	fmt.Println(dsn)
+	session.Store, err = redisstore.NewRediStore(10, "tcp", dsn, "", []byte("secret-key"))
+	defer session.Store.Close()
+	if err != nil {
+		panic(err)
+	}
 	s := NewServer()
 	s.Init()
 	defer s.db.Close()
