@@ -42,16 +42,25 @@ const useStyles = makeStyles(theme => ({
 
 function Login(props){
 	const classes = useStyles()
-	console.log(google)
+	console.log(process.env)
+	const login = () => {
+		if(process.env.NODE_ENV === "development"){
+			console.log(true)
+			window.location.href = "http://localhost:8080/api/login"
+		}else{
+			console.log(false)
+			window.location.href = "/api/login"
+		}
+	}
 	return(
 		<div className = {classes.root}>
 			<Paper className = {classes.paper}>
 				
 				<div className = {classes.links}>
-					<a href = {`/api/login`} className = {classes.lnk}>
+					<div onClick = {login} className = {classes.lnk}>
 						<img src = {google} className = {classes.img}/>
 						<div className = {classes.msg}>Googleアカウントでログイン</div>
-					</a>
+					</div>
 				</div>
 			</Paper>
 		</div>

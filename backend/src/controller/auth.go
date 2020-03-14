@@ -47,9 +47,10 @@ func (a *Auth) Authenticate(w http.ResponseWriter, r *http.Request) {
 
 func (a *Auth) LoginHandler(w http.ResponseWriter, r *http.Request) {
 
+	fmt.Println("loginhandler")
 	oauthFlowSession, err := session.Store.New(r, session.SessionName)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("hoge", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -59,14 +60,14 @@ func (a *Auth) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	oauthFlowSession.Values["oauthFlowRedirectKey"] = redirectURL
 
 	if err := oauthFlowSession.Save(r, w); err != nil {
-		fmt.Println(err)
+		fmt.Println("fuga", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
 	url := a.OAuthConfig.AuthCodeURL(session.SessionName, oauth2.ApprovalForce,
 		oauth2.AccessTypeOnline)
-
+	fmt.Println(url)
 	http.Redirect(w, r, url, http.StatusFound)
 
 }
